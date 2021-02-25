@@ -1,0 +1,97 @@
+type Condition {
+    condition_id: ID!
+    condition_condition: String
+    condition_high: Float
+    condition_low: Float
+    condition_value: Float
+    condition_message: String
+    condition_last_updated: String
+    condition_created: String
+}
+
+type Param {
+    param_id: ID!
+    param_name: String
+    param_value: String
+    param_last_updated: String
+    param_created: String
+}
+
+type Customer {
+    customer_id: String!
+    customer_name: String
+    customer_conditions: [Condition]
+    customer_promotions: [Promotion]
+    customer_last_updated: String
+    customer_created: String
+}
+
+type Promotion {
+    promotion_id: ID!
+    promotion_promotion: String
+    promotion_start_date: String
+    promotion_end_date: String
+    promotion_last_updated: String
+    promotion_created: String
+}
+
+type Recommendation {
+    recommendation_id: ID!
+    recommendation_recommendation: String
+    recommendation_active: Boolean
+    recommendation_last_updated: String
+    recommendation_created: String
+}
+
+type Update {
+    update_id: ID!
+    update_sku_number: String
+    update_sku_id: ID
+    update_sku_description: String
+    update_customer_id: String
+    update_customer_name: String
+    update_brand_id: String
+    update_brand_name: String
+    update_update: String
+    update_url: String
+    update_active: Boolean
+    update_last_updated: String
+    update_created: String
+}
+
+type Insight {
+    insight_id: ID!
+    insight_insight: String
+    insight_active: Boolean
+    insight_last_updated: String
+    insight_created: String
+}
+
+type Sku {
+    sku_id: String!
+    sku_number: String
+    sku_description: String
+    sku_customer: [Customer]
+    sku_recommendations: [Recommendation]
+    sku_last_updated: String
+    sku_created: String
+}
+
+type Org @model {
+    id: ID!
+    org_id: String!
+    org_name: String!
+    org_skus: [Sku]
+    org_updates: [Update]
+    org_insights: [Insight]
+    org_params: [Param]
+    org_last_updated: String
+}
+
+input CreateSkuInput {
+    sku_id: String!
+    sku_number: String
+    sku_description: String
+    sku_org_id: ID!
+    sku_created: String
+}
