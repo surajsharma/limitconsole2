@@ -1,0 +1,10 @@
+{
+  "auth": {
+    "limitconsole22ba6f48d": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    }
+  }
+}
