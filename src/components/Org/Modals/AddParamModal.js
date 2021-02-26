@@ -20,7 +20,7 @@ function AddParamModal(props) {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const initialRef = useRef();
 
-    const { org, AddParam } = props;
+    const { AddParam } = props;
 
     const [paramName, setParamName] = useState("");
     const [paramValue, setParamValue] = useState("");

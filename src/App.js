@@ -11,7 +11,6 @@ import { Router } from "react-router-dom";
 
 // CHAKRA/UI STUFF
 import { VStack, Flex, Box } from "@chakra-ui/react";
-
 import { Routes } from "./components/Common/utils";
 
 import "./App.css";

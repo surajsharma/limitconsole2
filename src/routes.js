@@ -3,7 +3,7 @@ import Org from "./components/Org/Org";
 import Sku from "./components/Sku/Sku";
 import Customer from "./components/Sku/Customer";
 
-export default [
+const routes = [
     { path: "/", name: "Orgs", Component: OrgList },
     { path: "/org/:orgId", name: "Org", Component: Org },
     { path: "/org/:orgId/:skuId", name: "Sku", Component: Sku },
@@ -13,3 +13,5 @@ export default [
         Component: Customer,
     },
 ];
+
+export default routes;

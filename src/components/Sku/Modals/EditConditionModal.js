@@ -11,7 +11,6 @@ import {
     useDisclosure,
     FormControl,
     Spacer,
-    Text,
 } from "@chakra-ui/react";
 
 import ButtonF from "../../Common/ButtonF";
