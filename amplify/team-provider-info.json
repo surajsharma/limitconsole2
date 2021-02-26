@@ -1,20 +1,26 @@
 {
-  "dev": {
-    "awscloudformation": {
-      "AuthRoleName": "amplify-limitconsole2-dev-113409-authRole",
-      "UnauthRoleArn": "arn:aws:iam::025877609306:role/amplify-limitconsole2-dev-113409-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::025877609306:role/amplify-limitconsole2-dev-113409-authRole",
-      "Region": "eu-west-1",
-      "DeploymentBucketName": "amplify-limitconsole2-dev-113409-deployment",
-      "UnauthRoleName": "amplify-limitconsole2-dev-113409-unauthRole",
-      "StackName": "amplify-limitconsole2-dev-113409",
-      "StackId": "arn:aws:cloudformation:eu-west-1:025877609306:stack/amplify-limitconsole2-dev-113409/4c8e6220-772f-11eb-817c-02a3ab0eb3e5",
-      "AmplifyAppId": "dokquhwx62dkq"
-    },
-    "categories": {
-      "auth": {
-        "limitconsole22ba6f48d": {}
-      }
+    "dev": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-limitconsole2-dev-113409-authRole",
+            "UnauthRoleArn": "arn:aws:iam::025877609306:role/amplify-limitconsole2-dev-113409-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::025877609306:role/amplify-limitconsole2-dev-113409-authRole",
+            "Region": "eu-west-1",
+            "DeploymentBucketName": "amplify-limitconsole2-dev-113409-deployment",
+            "UnauthRoleName": "amplify-limitconsole2-dev-113409-unauthRole",
+            "StackName": "amplify-limitconsole2-dev-113409",
+            "StackId": "arn:aws:cloudformation:eu-west-1:025877609306:stack/amplify-limitconsole2-dev-113409/4c8e6220-772f-11eb-817c-02a3ab0eb3e5",
+            "AmplifyAppId": "dokquhwx62dkq"
+        },
+        "categories": {
+            "auth": {
+                "limitconsole22ba6f48d": {}
+            },
+            "hosting": {
+                "amplifyhosting": {
+                    "appId": "dokquhwx62dkq",
+                    "type": "cicd"
+                }
+            }
+        }
     }
-  }
 }
