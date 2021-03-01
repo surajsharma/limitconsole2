@@ -225,7 +225,7 @@ function Sku(props) {
                     ) : (
                         <Center>
                             <Text fontSize="sm" m="20px">
-                                No{" "}
+                                No
                                 {activeTab === 0
                                     ? "Customers"
                                     : "Recommendations"}{" "}

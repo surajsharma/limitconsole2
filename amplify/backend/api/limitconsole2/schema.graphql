@@ -18,7 +18,7 @@ type Param {
 }
 
 type Customer {
-    customer_id: String!
+    customer_id: ID!
     customer_name: String
     customer_conditions: [Condition]
     customer_promotions: [Promotion]
