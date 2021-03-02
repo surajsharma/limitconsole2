@@ -11,12 +11,11 @@
 - Warning: Each child in a list should have a unique "key" prop. Check the render method of `Conditions`
 
 #Validation
+
 - Org
 - Sku
-- 
 - Conditions
   - condition
   - high
   - low
   - value 
-  - 

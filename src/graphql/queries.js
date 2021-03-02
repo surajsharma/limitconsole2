@@ -24,6 +24,7 @@ export const getOrg = /* GraphQL */ `
                         condition_message
                         condition_last_updated
                         condition_created
+                        condition_id
                     }
                     customer_promotions {
                         promotion_id

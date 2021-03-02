@@ -14,7 +14,7 @@ import EditSkuModal from "./Modals/EditSkuModal";
 
 function Skus({ skus, DeleteSku, UpdateSku, GotoSku }) {
     return (
-        <div>
+        <React.Fragment>
             {skus && skus.length ? (
                 <Table size="sm">
                     <Thead>
@@ -63,7 +63,7 @@ function Skus({ skus, DeleteSku, UpdateSku, GotoSku }) {
                     </Text>
                 </Center>
             )}
-        </div>
+        </React.Fragment>
     );
 }
 
