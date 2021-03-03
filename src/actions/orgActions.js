@@ -196,6 +196,7 @@ export const addSku = (postData, org) => {
                     ? [
                           ...org.org_skus,
                           {
+                              id: uuidv4(),
                               sku_id: sku_id,
                               sku_number: sku_number,
                               sku_description: sku_description,
@@ -204,6 +205,7 @@ export const addSku = (postData, org) => {
                           },
                       ]
                     : {
+                          id: uuidv4(),
                           sku_id: sku_id,
                           sku_number: sku_number,
                           sku_description: sku_description,
@@ -790,6 +792,12 @@ export const addCondition = async (c, customer, sku, org) => {
     newCustomer.customer_conditions = newConditons;
     newSkus[sku_index].sku_customer[cus_index] = newCustomer;
 
+    console.log(
+        "🚀 ~ file: orgActions.js ~ line 796 ~ addCondition ~ newConditons",
+        newConditons,
+        newSkus
+    );
+
     const variables = {
         input: {
             id: org.id,
@@ -798,6 +806,11 @@ export const addCondition = async (c, customer, sku, org) => {
     };
 
     const data = await API.graphql(graphqlOperation(updateOrg, variables));
+
+    console.log(
+        "🚀 ~ file: orgActions.js ~ line 809 ~ addCondition ~ data",
+        data
+    );
 
     if (data) {
         return async (dispatch) => {

@@ -8,6 +8,7 @@ export const getOrg = /* GraphQL */ `
             org_id
             org_name
             org_skus {
+                id
                 sku_id
                 sku_number
                 sku_description
@@ -17,6 +18,7 @@ export const getOrg = /* GraphQL */ `
                     customer_last_updated
                     customer_created
                     customer_conditions {
+                        condition_id
                         condition_condition
                         condition_high
                         condition_low
@@ -24,7 +26,6 @@ export const getOrg = /* GraphQL */ `
                         condition_message
                         condition_last_updated
                         condition_created
-                        condition_id
                     }
                     customer_promotions {
                         promotion_id
@@ -92,39 +93,10 @@ export const listOrgs = /* GraphQL */ `
                 org_id
                 org_name
                 org_skus {
+                    id
                     sku_id
                     sku_number
                     sku_description
-                    sku_customer {
-                        customer_id
-                        customer_name
-                        customer_last_updated
-                        customer_created
-                        customer_conditions {
-                            condition_condition
-                            condition_high
-                            condition_low
-                            condition_value
-                            condition_message
-                            condition_last_updated
-                            condition_created
-                        }
-                        customer_promotions {
-                            promotion_id
-                            promotion_promotion
-                            promotion_start_date
-                            promotion_end_date
-                            promotion_last_updated
-                            promotion_created
-                        }
-                    }
-                    sku_recommendations {
-                        recommendation_id
-                        recommendation_recommendation
-                        recommendation_active
-                        recommendation_last_updated
-                        recommendation_created
-                    }
                     sku_last_updated
                     sku_created
                 }

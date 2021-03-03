@@ -11,6 +11,7 @@ export const createOrg = /* GraphQL */ `
             org_id
             org_name
             org_skus {
+                id
                 sku_id
                 sku_number
                 sku_description
@@ -75,6 +76,7 @@ export const updateOrg = /* GraphQL */ `
             org_id
             org_name
             org_skus {
+                id
                 sku_id
                 sku_number
                 sku_description
@@ -157,6 +159,7 @@ export const deleteOrg = /* GraphQL */ `
             org_id
             org_name
             org_skus {
+                id
                 sku_id
                 sku_number
                 sku_description
@@ -184,6 +187,7 @@ export const deleteOrg = /* GraphQL */ `
                         promotion_created
                     }
                 }
+
                 sku_recommendations {
                     recommendation_id
                     recommendation_recommendation

@@ -68,6 +68,7 @@ type Insight {
 }
 
 type Sku {
+    id: ID!
     sku_id: String!
     sku_number: String
     sku_description: String
