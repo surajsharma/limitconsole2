@@ -48,6 +48,7 @@ function Sku(props) {
         loading,
         history,
         loadedSku,
+        addCustomer,
         fetchAnSku,
     } = props;
 
@@ -112,7 +113,7 @@ function Sku(props) {
     };
 
     const AddCustomer = (orgObject) => {
-        addCustomer(orgObject, loadedSku, loadedOrg);
+        return addCustomer(orgObject, loadedSku, loadedOrg);
     };
 
     const EditCustomer = (customer, orgObject) => {
@@ -174,7 +175,7 @@ function Sku(props) {
                                             <Tbody>
                                                 {customers.map((c) => (
                                                     <Tr
-                                                        key={c.customer_id}
+                                                        key={c.id}
                                                         _hover={{
                                                             background:
                                                                 "purple.100",
@@ -252,4 +253,5 @@ export default connect(mapStateToProps, {
     fetchOrgs,
     fetchAnSku,
     addSku,
+    addCustomer,
 })(Sku);

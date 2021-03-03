@@ -18,7 +18,8 @@ type Param {
 }
 
 type Customer {
-    customer_id: ID!
+    id: ID!
+    customer_id: Snpm i -g @aws-amplify/clitring
     customer_name: String
     customer_conditions: [Condition]
     customer_promotions: [Promotion]

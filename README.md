@@ -1,21 +1,9 @@
 #Bugs
 
 - <div> cannot appear as a child of <table>
-- adding conitions fails / crashes
-
+- adding customer sometimes fails (when theres' only one / 0 items, not with 2+ items)
 - add customer fails / no new customer added
-- adding promotions crashes (webpack unhandled rejection)
 - new customer updates old one
 
-- "Variable 'input' has coerced Null value for NonNull type 'ID!'"
-- Warning: Each child in a list should have a unique "key" prop. Check the render method of `Conditions`
-
-#Validation
-
-- Org
-- Sku
-- Conditions
-  - condition
-  - high
-  - low
-  - value 
+- adding conditions fails / crashes
+- adding promotions crashes (webpack unhandled rejection)

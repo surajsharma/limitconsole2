@@ -634,40 +634,43 @@ export const updateUpdate = async (update, postData, org) => {
     }
 };
 
-export const addCustomer = async (customer, sku, org) => {
-    let skus = org.org_skus;
-    let customers = sku.sku_customer;
+export const addCustomer = (customer, sku, org) => {
+    return async (dispatch) => {
+        dispatch({ type: IS_LOADING });
 
-    customer.customer_last_updated = new Date().toISOString();
-    customer.customer_created = new Date().toISOString();
+        let skus = org.org_skus;
+        let customers = sku.sku_customer ? sku.sku_customer : [];
 
-    customers = customers ? [...customers, customer] : [customer];
+        customer.customer_last_updated = new Date().toISOString();
+        customer.customer_created = new Date().toISOString();
+        customer.id = uuidv4();
 
-    const index = skus.findIndex(function (i) {
-        return i.sku_id === sku.sku_id;
-    });
+        customers = [...customers, customer];
 
-    skus[index].sku_customer = customers;
+        console.log(customers, customers.length);
 
-    const variables = {
-        input: {
-            id: org.id,
-            org_skus: skus,
-        },
-    };
+        const index = skus.findIndex(function (i) {
+            return i.sku_id === sku.sku_id;
+        });
 
-    const data = await API.graphql(graphqlOperation(updateOrg, variables));
+        skus[index].sku_customer = customers;
 
-    if (data) {
-        return async (dispatch) => {
-            dispatch({
-                type: ADD_CUSTOMER,
-                org: data.data.updateOrg,
-                sku: skus[index],
-                loading: false,
-            });
+        const variables = {
+            input: {
+                id: org.id,
+                org_skus: skus,
+            },
         };
-    }
+
+        const data = await API.graphql(graphqlOperation(updateOrg, variables));
+
+        dispatch({
+            type: ADD_CUSTOMER,
+            org: data.data.updateOrg,
+            sku: skus[index],
+            loading: false,
+        });
+    };
 };
 
 export const editCustomer = async (customer, postData, sku, org) => {
