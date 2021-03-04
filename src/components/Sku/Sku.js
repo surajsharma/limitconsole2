@@ -53,7 +53,6 @@ function Sku(props) {
     } = props;
 
     const [activeTab, setActiveTab] = useState(0);
-    // const org_id = location.pathname.split("/")[2];
     const sku_id = location.pathname.split("/")[3];
 
     useEffect(() => {
@@ -61,7 +60,6 @@ function Sku(props) {
             const sku_index = loadedOrg.org_skus.findIndex(
                 (i) => i.sku_id === sku_id
             );
-            // fetchOrg(org_id);
             fetchAnSku(sku_index, loadedOrg);
         } else {
             history.push("/");
