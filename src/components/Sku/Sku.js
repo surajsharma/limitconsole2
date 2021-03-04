@@ -57,12 +57,11 @@ function Sku(props) {
     const sku_id = location.pathname.split("/")[3];
 
     useEffect(() => {
-        fetchOrg(org_id);
-
         if (loadedOrg.id) {
             const sku_index = loadedOrg.org_skus.findIndex(
                 (i) => i.sku_id === sku_id
             );
+            // fetchOrg(org_id);
             fetchAnSku(sku_index, loadedOrg);
         } else {
             history.push("/");
@@ -72,7 +71,6 @@ function Sku(props) {
             query: onUpdateOrg,
         }).subscribe({
             next: (orgData) => {
-                fetchOrg(org_id);
                 if (loadedOrg.id) {
                     const sku_index = loadedOrg.org_skus.findIndex(
                         (i) => i.sku_id === sku_id

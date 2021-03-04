@@ -639,19 +639,24 @@ export const addCustomer = (customer, sku, org) => {
         dispatch({ type: IS_LOADING });
 
         let skus = org.org_skus;
-        let customers = sku.sku_customer ? sku.sku_customer : [];
+        let customers = sku.sku_customer;
+        let newCustomer = customer;
 
-        customer.customer_last_updated = new Date().toISOString();
-        customer.customer_created = new Date().toISOString();
-        customer.id = uuidv4();
-
-        customers = [...customers, customer];
-
-        console.log(customers, customers.length);
+        newCustomer.customer_last_updated = new Date().toISOString();
+        newCustomer.customer_created = new Date().toISOString();
+        newCustomer.id = uuidv4();
 
         const index = skus.findIndex(function (i) {
             return i.sku_id === sku.sku_id;
         });
+
+        if (customers === null || customers === [] || customers.length === 0) {
+            console.log("customers is null", customers);
+            customers = [customer];
+        } else {
+            console.log("customers is not null", customers);
+            customers = [...customers, customer];
+        }
 
         skus[index].sku_customer = customers;
 
@@ -663,7 +668,6 @@ export const addCustomer = (customer, sku, org) => {
         };
 
         const data = await API.graphql(graphqlOperation(updateOrg, variables));
-
         dispatch({
             type: ADD_CUSTOMER,
             org: data.data.updateOrg,

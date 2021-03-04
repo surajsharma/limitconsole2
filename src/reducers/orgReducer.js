@@ -69,6 +69,7 @@ const rootReducer = (state = initialState, action) => {
         case FETCH_ORG_ERR:
             return { ...state, error: action.error, loading: false };
         case FETCH_SKU:
+            console.log(action, "FETCH SKU");
             return {
                 ...state,
                 loadedSku: action.sku,
@@ -136,7 +137,12 @@ const rootReducer = (state = initialState, action) => {
         case DELETE_UPDATE_ERR:
             return { ...state, error: action.error };
         case ADD_CUSTOMER:
-            return { ...state, org: action.org, loadedSku: action.sku };
+            return {
+                ...state,
+                org: action.org,
+                loadedSku: action.sku,
+                loading: action.loading,
+            };
         case EDIT_CUSTOMER:
             return { ...state, org: action.org, loadedSku: action.sku };
         case DELETE_CUSTOMER:
