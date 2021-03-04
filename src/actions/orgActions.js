@@ -715,41 +715,41 @@ export const editCustomer = async (customer, postData, sku, org) => {
     }
 };
 
-export const delCustomer = async (postData, sku, org) => {
-    let newCustomers = sku.sku_customer;
-    let newSkus = org.org_skus;
+export const delCustomer = (postData, sku, org) => {
+    return async (dispatch) => {
+        console.log("deleteing customers", postData);
+        dispatch({ type: IS_LOADING });
+        let newCustomers = sku.sku_customer;
+        let newSkus = org.org_skus;
 
-    const { customer_id } = postData;
+        const { customer_id } = postData;
 
-    const customer_index = newCustomers.findIndex(
-        (c) => c.customer_id === customer_id
-    );
+        const customer_index = newCustomers.findIndex(
+            (c) => c.customer_id === customer_id
+        );
 
-    const sku_index = newSkus.findIndex((s) => s.sku_id === sku.sku_id);
+        const sku_index = newSkus.findIndex((s) => s.sku_id === sku.sku_id);
 
-    newCustomers.splice(customer_index, 1);
+        newCustomers.splice(customer_index, 1);
 
-    newSkus[sku_index].sku_customer = newCustomers;
+        newSkus[sku_index].sku_customer = newCustomers;
 
-    const variables = {
-        input: {
-            id: org.id,
-            org_skus: newSkus,
-        },
-    };
-
-    const data = await API.graphql(graphqlOperation(updateOrg, variables));
-
-    if (data) {
-        return async (dispatch) => {
-            dispatch({
-                type: DELETE_CUSTOMER,
-                org: data.data.updateOrg,
-                sku: newSkus[sku_index],
-                loading: false,
-            });
+        const variables = {
+            input: {
+                id: org.id,
+                org_skus: newSkus,
+            },
         };
-    }
+
+        const data = await API.graphql(graphqlOperation(updateOrg, variables));
+
+        dispatch({
+            type: DELETE_CUSTOMER,
+            org: data.data.updateOrg,
+            sku: newSkus[sku_index],
+            loading: false,
+        });
+    };
 };
 
 export const fetchCustomer = (skuIndex, customerId, org) => {

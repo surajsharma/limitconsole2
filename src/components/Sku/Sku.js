@@ -43,17 +43,17 @@ function Sku(props) {
     let customers = [];
 
     const {
-        fetchOrg,
         loadedOrg,
         loading,
         history,
         loadedSku,
         addCustomer,
+        delCustomer,
         fetchAnSku,
     } = props;
 
     const [activeTab, setActiveTab] = useState(0);
-    const org_id = location.pathname.split("/")[2];
+    // const org_id = location.pathname.split("/")[2];
     const sku_id = location.pathname.split("/")[3];
 
     useEffect(() => {
@@ -119,7 +119,7 @@ function Sku(props) {
     };
 
     const DeleteCustomer = (customer) => {
-        delCustomer(customer, loadedSku, loadedOrg);
+        return delCustomer(customer, loadedSku, loadedOrg);
     };
 
     const gotoCustomer = (id) => {
@@ -252,4 +252,5 @@ export default connect(mapStateToProps, {
     fetchAnSku,
     addSku,
     addCustomer,
+    delCustomer,
 })(Sku);
