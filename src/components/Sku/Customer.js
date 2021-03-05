@@ -48,6 +48,7 @@ function Customers(props) {
     let location = useLocation();
     let conditions = [];
     let promotions = [];
+
     const {
         loadedOrg,
         fetchOrg,
@@ -56,6 +57,7 @@ function Customers(props) {
         loadedSku,
         loadedCustomer,
         fetchCustomer,
+        addCondition,
     } = props;
 
     const [activeTab, setActiveTab] = useState(0);
@@ -70,8 +72,8 @@ function Customers(props) {
             const sku_index = loadedOrg.org_skus.findIndex(
                 (i) => i.sku_id === sku_id
             );
-            //customer
-            fetchAnSku(sku_index, loadedOrg);
+            // customer
+            // fetchAnSku(sku_index, loadedOrg);
             fetchCustomer(sku_index, cus_id, loadedOrg);
         } else {
             history.push("/");
@@ -80,15 +82,13 @@ function Customers(props) {
             query: onUpdateOrg,
         }).subscribe({
             next: (orgData) => {
-                fetchOrg(org_id);
-
+                // fetchOrg(org_id);
                 if (loadedOrg.id) {
                     const sku_index = loadedOrg.org_skus.findIndex(
                         (i) => i.sku_id === sku_id
                     );
-
-                    //customer
-                    fetchAnSku(sku_index, loadedOrg);
+                    // customer
+                    // fetchAnSku(sku_index, loadedOrg);
                     fetchCustomer(sku_index, cus_id, loadedOrg);
                 }
             },
@@ -138,7 +138,7 @@ function Customers(props) {
     };
 
     const AddCondition = (orgObject) => {
-        addCondition(orgObject, loadedCustomer, loadedSku, loadedOrg);
+        return addCondition(orgObject, loadedCustomer, loadedSku, loadedOrg);
     };
 
     const EditPromotion = (promo, orgObject) => {
@@ -353,4 +353,5 @@ export default connect(mapStateToProps, {
     fetchOrgs,
     fetchAnSku,
     fetchCustomer,
+    addCondition,
 })(Customers);

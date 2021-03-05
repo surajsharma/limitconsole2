@@ -766,69 +766,67 @@ export const fetchCustomer = (skuIndex, customerId, org) => {
         });
 };
 
-export const addCondition = async (c, customer, sku, org) => {
-    let newSkus = org.org_skus;
+export const addCondition = (c, customer, sku, org) => {
+    return async (dispatch) => {
+        let newSkus = org.org_skus;
 
-    const sku_index = newSkus.findIndex((s) => s.sku_id === sku.sku_id);
+        const sku_index = newSkus.findIndex((s) => s.sku_id === sku.sku_id);
 
-    const cus_index = sku.sku_customer.findIndex(
-        (c) => c.customer_id === customer.customer_id
-    );
+        const cus_index = sku.sku_customer.findIndex(
+            (c) => c.customer_id === customer.customer_id
+        );
 
-    const conditions = customer.customer_conditions
-        ? customer.customer_conditions
-        : [];
+        const conditions = customer.customer_conditions
+            ? customer.customer_conditions
+            : [];
 
-    const condition = {
-        condition_condition: c.condition_condition,
-        condition_high: c.condition_high,
-        condition_low: c.condition_low,
-        condition_value: c.condition_value,
-        condition_message: c.condition_message,
-        condition_last_updated: new Date().toISOString(),
-        condition_created: new Date().toISOString(),
-        condition_id: uuidv4(),
-    };
-
-    let newConditons = conditions;
-
-    newConditons.push(condition);
-
-    let newCustomer = newSkus[sku_index].sku_customer[cus_index];
-
-    newCustomer.customer_conditions = newConditons;
-    newSkus[sku_index].sku_customer[cus_index] = newCustomer;
-
-    console.log(
-        "🚀 ~ file: orgActions.js ~ line 796 ~ addCondition ~ newConditons",
-        newConditons,
-        newSkus
-    );
-
-    const variables = {
-        input: {
-            id: org.id,
-            org_skus: newSkus,
-        },
-    };
-
-    const data = await API.graphql(graphqlOperation(updateOrg, variables));
-
-    console.log(
-        "🚀 ~ file: orgActions.js ~ line 809 ~ addCondition ~ data",
-        data
-    );
-
-    if (data) {
-        return async (dispatch) => {
-            dispatch({
-                type: ADD_CONDITION,
-                org: data.data.updateOrg,
-                sku: newSkus[sku_index],
-                customer: newCustomer,
-            });
+        const condition = {
+            condition_condition: c.condition_condition,
+            condition_high: c.condition_high,
+            condition_low: c.condition_low,
+            condition_value: c.condition_value,
+            condition_message: c.condition_message,
+            condition_last_updated: new Date().toISOString(),
+            condition_created: new Date().toISOString(),
+            condition_id: uuidv4(),
         };
-    }
+
+        let newConditons = conditions;
+
+        newConditons.push(condition);
+
+        let newCustomer = newSkus[sku_index].sku_customer[cus_index];
+
+        newCustomer.customer_conditions = newConditons;
+        newSkus[sku_index].sku_customer[cus_index] = newCustomer;
+
+        console.log(
+            "🚀 ~ file: orgActions.js ~ line 796 ~ addCondition ~ newConditons",
+            newConditons,
+            newSkus
+        );
+
+        const variables = {
+            input: {
+                id: org.id,
+                org_skus: newSkus,
+            },
+        };
+
+        const data = await API.graphql(graphqlOperation(updateOrg, variables));
+
+        console.log(
+            "🚀 ~ file: orgActions.js ~ line 809 ~ addCondition ~ data",
+            data
+        );
+
+        dispatch({
+            type: ADD_CONDITION,
+            org: data.data.updateOrg,
+            sku: newSkus[sku_index],
+            customer: newCustomer,
+        });
+    };
 };
 
 export const editCondition = async (c, condition, customer, sku, org) => {
