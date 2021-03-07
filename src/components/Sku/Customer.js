@@ -56,6 +56,7 @@ function Customers(props) {
         loadedCustomer,
         fetchCustomer,
         addCondition,
+        editCondition,
         delCondition,
     } = props;
 
@@ -125,7 +126,7 @@ function Customers(props) {
     };
 
     const EditCondition = (condition, orgObject) => {
-        editCondition(
+        return editCondition(
             orgObject,
             condition,
             loadedCustomer,
@@ -355,5 +356,6 @@ export default connect(mapStateToProps, {
     fetchAnSku,
     fetchCustomer,
     addCondition,
+    editCondition,
     delCondition,
 })(Customers);
