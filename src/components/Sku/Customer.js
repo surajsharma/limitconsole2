@@ -263,6 +263,15 @@ function Customers(props) {
         promotions =
             loadedOrg.org_skus[sku_index].sku_customer[cus_index]
                 .customer_promotions;
+
+        console.log(
+            "",
+            conditions,
+            promotions,
+            sku_index,
+            cus_index,
+            loadedOrg.org_skus[sku_index].sku_customer[cus_index]
+        );
     }
 
     return (
