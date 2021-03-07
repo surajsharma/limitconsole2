@@ -41,6 +41,7 @@ import {
     FETCH_CUSTOMER,
     ADD_CONDITION,
     EDIT_CONDITION,
+    DELETE_CONDITION,
     ADD_PROMOTION,
     DELETE_PROMOTION,
     EDIT_PROMOTION,
@@ -164,6 +165,14 @@ const rootReducer = (state = initialState, action) => {
                 loadedOrg: action.org,
             };
         case EDIT_CONDITION:
+            return {
+                ...state,
+                loadedSku: action.sku,
+                loadedCustomer: action.customer,
+                loading: false,
+                loadedOrg: action.org,
+            };
+        case DELETE_CONDITION:
             return {
                 ...state,
                 loadedSku: action.sku,

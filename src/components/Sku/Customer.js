@@ -38,10 +38,8 @@ import {
 
 import AddConditionModal from "./Modals/AddConditionModal";
 import EditConditionModal from "./Modals/EditConditionModal";
-
 import AddPromotionModal from "./Modals/AddPromotionModal";
 import EditPromotionModal from "./Modals/EditPromotionModal";
-
 import { onUpdateOrg } from "../../graphql/subscriptions";
 
 function Customers(props) {
@@ -58,6 +56,7 @@ function Customers(props) {
         loadedCustomer,
         fetchCustomer,
         addCondition,
+        delCondition,
     } = props;
 
     const [activeTab, setActiveTab] = useState(0);
@@ -68,6 +67,7 @@ function Customers(props) {
 
     useEffect(() => {
         fetchOrg(org_id);
+
         if (loadedOrg.id) {
             const sku_index = loadedOrg.org_skus.findIndex(
                 (i) => i.sku_id === sku_id
@@ -78,6 +78,7 @@ function Customers(props) {
         } else {
             history.push("/");
         }
+
         const subscriptionUpdate = API.graphql({
             query: onUpdateOrg,
         }).subscribe({
@@ -88,7 +89,7 @@ function Customers(props) {
                         (i) => i.sku_id === sku_id
                     );
                     // customer
-                    // fetchAnSku(sku_index, loadedOrg);
+                    fetchAnSku(sku_index, loadedOrg);
                     fetchCustomer(sku_index, cus_id, loadedOrg);
                 }
             },
@@ -134,7 +135,7 @@ function Customers(props) {
     };
 
     const DeleteCondition = (orgObject) => {
-        delCondition(orgObject, loadedCustomer, loadedSku, loadedOrg);
+        return delCondition(orgObject, loadedCustomer, loadedSku, loadedOrg);
     };
 
     const AddCondition = (orgObject) => {
@@ -263,15 +264,6 @@ function Customers(props) {
         promotions =
             loadedOrg.org_skus[sku_index].sku_customer[cus_index]
                 .customer_promotions;
-
-        console.log(
-            "",
-            conditions,
-            promotions,
-            sku_index,
-            cus_index,
-            loadedOrg.org_skus[sku_index].sku_customer[cus_index]
-        );
     }
 
     return (
@@ -363,4 +355,5 @@ export default connect(mapStateToProps, {
     fetchAnSku,
     fetchCustomer,
     addCondition,
+    delCondition,
 })(Customers);

@@ -41,6 +41,7 @@ import {
     FETCH_CUSTOMER,
     ADD_CONDITION,
     EDIT_CONDITION,
+    DELETE_CONDITION,
     ADD_PROMOTION,
     DELETE_PROMOTION,
     EDIT_PROMOTION,
@@ -768,6 +769,7 @@ export const fetchCustomer = (skuIndex, customerId, org) => {
 
 export const addCondition = (c, customer, sku, org) => {
     return async (dispatch) => {
+        dispatch({ type: IS_LOADING });
         let newSkus = org.org_skus;
 
         const sku_index = newSkus.findIndex((s) => s.sku_id === sku.sku_id);
@@ -878,47 +880,49 @@ export const editCondition = async (c, condition, customer, sku, org) => {
     }
 };
 
-export const delCondition = async (c, customer, sku, org) => {
-    let newSkus = org.org_skus;
+export const delCondition = (c, customer, sku, org) => {
+    return async (dispatch) => {
+        dispatch({ type: IS_LOADING });
+        let newSkus = org.org_skus;
+        const sku_index = newSkus.findIndex((s) => s.sku_id === sku.sku_id);
 
-    const sku_index = newSkus.findIndex((s) => s.sku_id === sku.sku_id);
+        const cus_index = sku.sku_customer.findIndex(
+            (c) => c.customer_id === customer.customer_id
+        );
 
-    const cus_index = sku.sku_customer.findIndex(
-        (c) => c.customer_id === customer.customer_id
-    );
+        const con_index = newSkus[sku_index].sku_customer[
+            cus_index
+        ].customer_conditions.findIndex(
+            (cus) => cus.customer_id === c.customer_id
+        );
 
-    const con_index = newSkus[sku_index].sku_customer[
-        cus_index
-    ].customer_conditions.findIndex((cus) => cus.customer_id === c.customer_id);
+        let conditions = customer.customer_conditions;
 
-    let conditions = customer.customer_conditions;
+        conditions.splice(con_index, 1);
 
-    conditions.splice(con_index, 1);
+        let newCustomer = newSkus[sku_index].sku_customer[cus_index];
 
-    let newCustomer = newSkus[sku_index].sku_customer[cus_index];
+        newCustomer.customer_conditions = conditions;
+        newSkus[sku_index].sku_customer[cus_index] = newCustomer;
 
-    newCustomer.customer_conditions = conditions;
-    newSkus[sku_index].sku_customer[cus_index] = newCustomer;
+        const variables = {
+            input: {
+                id: org.id,
+                org_skus: newSkus,
+            },
+        };
 
-    const variables = {
-        input: {
-            id: org.id,
-            org_skus: newSkus,
-        },
-    };
+        const data = await API.graphql(graphqlOperation(updateOrg, variables));
 
-    const data = await API.graphql(graphqlOperation(updateOrg, variables));
-
-    if (data) {
-        return async (dispatch) => {
+        if (data) {
             dispatch({
-                type: EDIT_CONDITION,
+                type: DELETE_CONDITION,
                 org: data.data.updateOrg,
                 sku: newSkus[sku_index],
                 customer: newCustomer,
             });
-        };
-    }
+        }
+    };
 };
 
 export const addPromotion = async (p, customer, sku, org) => {
