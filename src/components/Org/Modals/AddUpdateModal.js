@@ -63,13 +63,11 @@ function AddUpdateModal(props) {
                                     />
                                     <Input
                                         value={url}
-                                        ref={initialRef}
                                         placeholder="URL"
                                         onChange={(e) => setUrl(e.target.value)}
                                     />
                                     <Input
                                         value={skuId}
-                                        ref={initialRef}
                                         placeholder="SKU ID"
                                         onChange={(e) =>
                                             setSkuId(e.target.value)
@@ -77,7 +75,6 @@ function AddUpdateModal(props) {
                                     />
                                     <Input
                                         value={skuNumber}
-                                        ref={initialRef}
                                         placeholder="SKU Number"
                                         onChange={(e) =>
                                             setSkuNumber(e.target.value)
@@ -85,7 +82,6 @@ function AddUpdateModal(props) {
                                     />
                                     <Input
                                         value={skuDesc}
-                                        ref={initialRef}
                                         placeholder="SKU Description"
                                         onChange={(e) =>
                                             setSkuDesc(e.target.value)
@@ -93,7 +89,6 @@ function AddUpdateModal(props) {
                                     />
                                     <Input
                                         value={customerId}
-                                        ref={initialRef}
                                         placeholder="Customer ID"
                                         onChange={(e) =>
                                             setCustomerId(e.target.value)
@@ -101,7 +96,6 @@ function AddUpdateModal(props) {
                                     />
                                     <Input
                                         value={customerName}
-                                        ref={initialRef}
                                         placeholder="Customer Name"
                                         onChange={(e) =>
                                             setCustomerName(e.target.value)
@@ -109,7 +103,6 @@ function AddUpdateModal(props) {
                                     />
                                     <Input
                                         value={brandId}
-                                        ref={initialRef}
                                         placeholder="Brand ID"
                                         onChange={(e) =>
                                             setBrandId(e.target.value)
@@ -117,7 +110,6 @@ function AddUpdateModal(props) {
                                     />
                                     <Input
                                         value={brandName}
-                                        ref={initialRef}
                                         placeholder="Brand Name"
                                         onChange={(e) =>
                                             setBrandName(e.target.value)

@@ -113,78 +113,73 @@ export const fetchAnSku = (index, org) => {
         dispatch({ type: FETCH_SKU, org: org, sku: org.org_skus[index] });
 };
 
-export const updateSku = async (sku, postData, org) => {
-    const sku_id = sku.sku_id;
-    let skus = org.org_skus;
+export const updateSku = (sku, postData, org) => {
+    return async (dispatch) => {
+        dispatch({ type: IS_LOADING });
+        const sku_id = sku.sku_id;
+        let skus = org.org_skus;
 
-    //find by original ID as the user may have changed the ID
+        //find by original ID as the user may have changed the ID
 
-    const index = skus.findIndex(function (i) {
-        return i.sku_id === sku_id;
-    });
+        const index = skus.findIndex(function (i) {
+            return i.sku_id === sku_id;
+        });
 
-    skus[index].sku_id = postData.sku_id;
-    skus[index].sku_number = postData.sku_number;
-    skus[index].sku_description = postData.sku_description;
-    skus[index].sku_last_updated = postData.sku_last_updated;
+        skus[index].sku_id = postData.sku_id;
+        skus[index].sku_number = postData.sku_number;
+        skus[index].sku_description = postData.sku_description;
+        skus[index].sku_last_updated = postData.sku_last_updated;
 
-    const variables = {
-        input: {
-            id: org.id,
-            org_skus: skus && skus.length ? [...skus] : [],
-        }, // key is "input" based on the mutation above
-    };
-
-    const data = await API.graphql({ query: updateOrg, variables });
-    if (data) {
-        return async (dispatch) => {
-            try {
-                const data = await API.graphql({ query: updateOrg, variables });
-                dispatch({
-                    type: UPDATE_SKU,
-                    org: data.data.updateOrg,
-                });
-            } catch (err) {
-                dispatch({ type: UPDATE_SKU_ERR, error: err });
-            }
+        const variables = {
+            input: {
+                id: org.id,
+                org_skus: skus && skus.length ? [...skus] : [],
+            }, // key is "input" based on the mutation above
         };
-    }
+
+        try {
+            const data = await API.graphql({ query: updateOrg, variables });
+            dispatch({
+                type: UPDATE_SKU,
+                org: data.data.updateOrg,
+            });
+        } catch (err) {
+            dispatch({ type: UPDATE_SKU_ERR, error: err });
+        }
+    };
 };
 
-export const delSku = async (postData, org) => {
-    const { sku_id } = postData;
-    const skus = org.org_skus;
+export const delSku = (postData, org) => {
+    return async (dispatch) => {
+        dispatch({ type: IS_LOADING });
+        const { sku_id } = postData;
+        const skus = org.org_skus;
 
-    skus.splice(
-        skus.findIndex(function (i) {
-            return i.id === sku_id;
-        }),
-        1
-    );
+        skus.splice(
+            skus.findIndex(function (i) {
+                return i.id === sku_id;
+            }),
+            1
+        );
 
-    const variables = {
-        input: {
-            id: org.id,
-            org_skus: skus && skus.length ? [...skus] : [],
-        }, // key is "input" based on the mutation above
-    };
-
-    const data = await API.graphql({ query: updateOrg, variables });
-
-    if (data) {
-        return async (dispatch) => {
-            try {
-                const data = await API.graphql({ query: updateOrg, variables });
-                dispatch({
-                    type: DELETE_SKU,
-                    org: data.data.updateOrg,
-                    loadedSku: null,
-                });
-            } catch (err) {
-                dispatch({ type: DELETE_SKU_ERR, error: err });
-            }
+        const variables = {
+            input: {
+                id: org.id,
+                org_skus: skus && skus.length ? [...skus] : [],
+            }, // key is "input" based on the mutation above
         };
-    }
+
+        try {
+            const data = await API.graphql({ query: updateOrg, variables });
+            dispatch({
+                type: DELETE_SKU,
+                org: data.data.updateOrg,
+                loadedSku: null,
+            });
+        } catch (err) {
+            dispatch({ type: DELETE_SKU_ERR, error: err });
+        }
+    };
 };
 
 export const addSku = (postData, org) => {
@@ -279,360 +274,350 @@ export const deleteAnOrg = ({ id }) => {
     };
 };
 
-export const addParam = async (postData, org) => {
-    const { param_value, param_name } = postData;
+export const addParam = (postData, org) => {
+    return async (dispatch) => {
+        dispatch({ type: IS_LOADING });
+        const { param_value, param_name } = postData;
 
-    const variables = {
-        input: {
-            id: org.id,
-            org_params:
-                org.org_params && org.org_params.length
-                    ? [
-                          ...org.org_params,
-                          {
+        const variables = {
+            input: {
+                id: org.id,
+                org_params:
+                    org.org_params && org.org_params.length
+                        ? [
+                              ...org.org_params,
+                              {
+                                  param_id: uuidv4(),
+                                  param_name,
+                                  param_value,
+                                  param_last_updated: new Date().toISOString(),
+                                  param_created: new Date().toISOString(),
+                              },
+                          ]
+                        : {
                               param_id: uuidv4(),
                               param_name,
                               param_value,
                               param_last_updated: new Date().toISOString(),
                               param_created: new Date().toISOString(),
                           },
-                      ]
-                    : {
-                          param_id: uuidv4(),
-                          param_name,
-                          param_value,
-                          param_last_updated: new Date().toISOString(),
-                          param_created: new Date().toISOString(),
-                      },
-        }, // key is "input" based on the mutation above
-    };
-
-    const data = await API.graphql({
-        query: updateOrg,
-        variables,
-    });
-
-    if (data) {
-        return async (dispatch) => {
-            try {
-                dispatch({
-                    type: ADD_PARAM,
-                    org: data.data.updateOrg,
-                });
-            } catch (err) {
-                dispatch({ type: ADD_PARAM_ERR, error: err });
-            }
+            }, // key is "input" based on the mutation above
         };
-    }
+
+        const data = await API.graphql({
+            query: updateOrg,
+            variables,
+        });
+
+        try {
+            dispatch({
+                type: ADD_PARAM,
+                org: data.data.updateOrg,
+            });
+        } catch (err) {
+            dispatch({ type: ADD_PARAM_ERR, error: err });
+        }
+    };
 };
 
-export const delParam = async (postData, org) => {
-    const { param_id } = postData;
-    let params = org.org_params;
+export const delParam = (postData, org) => {
+    return async (dispatch) => {
+        dispatch({ type: IS_LOADING });
+        const { param_id } = postData;
+        let params = org.org_params;
 
-    params.splice(
-        params.findIndex((i) => {
+        params.splice(
+            params.findIndex((i) => {
+                return i.param_id === param_id;
+            })
+        );
+
+        const variables = {
+            input: {
+                id: org.id,
+                org_params: params && params.length ? [...params] : [],
+            }, // key is "input" based on the mutation above
+        };
+
+        try {
+            const data = await API.graphql({ query: updateOrg, variables });
+            dispatch({
+                type: DELETE_PARAM,
+                org: data.data.updateOrg,
+            });
+        } catch (err) {
+            dispatch({ type: DELETE_PARAM_ERR, error: err });
+        }
+    };
+};
+
+export const updateParam = (param, postData, org) => {
+    return async (dispatch) => {
+        const param_id = param.param_id;
+        let params = org.org_params;
+
+        //find by original ID as the user may have changed the ID
+
+        const index = params.findIndex(function (i) {
             return i.param_id === param_id;
-        })
-    );
+        });
 
-    const variables = {
-        input: {
-            id: org.id,
-            org_params: params && params.length ? [...params] : [],
-        }, // key is "input" based on the mutation above
-    };
+        params[index].param_name = postData.param_name;
+        params[index].param_value = postData.param_value;
+        params[index].param_last_updated = new Date().toISOString();
 
-    const data = await API.graphql({ query: updateOrg, variables });
-
-    if (data) {
-        return async (dispatch) => {
-            try {
-                const data = await API.graphql({ query: updateOrg, variables });
-                dispatch({
-                    type: DELETE_PARAM,
-                    org: data.data.updateOrg,
-                });
-            } catch (err) {
-                dispatch({ type: DELETE_PARAM_ERR, error: err });
-            }
+        const variables = {
+            input: {
+                id: org.id,
+                org_params: params && params.length ? [...params] : [],
+            }, // key is "input" based on the mutation above
         };
-    }
+
+        try {
+            const data = await API.graphql({ query: updateOrg, variables });
+            dispatch({
+                type: UPDATE_PARAM,
+                org: data.data.updateOrg,
+            });
+        } catch (err) {
+            dispatch({ type: UPDATE_PARAM_ERR, error: err });
+        }
+    };
 };
 
-export const updateParam = async (param, postData, org) => {
-    const param_id = param.param_id;
-    let params = org.org_params;
+export const addInsight = (postData, org) => {
+    return async (dispatch) => {
+        dispatch({ type: IS_LOADING });
+        const { insight_insight, insight_active } = postData;
 
-    //find by original ID as the user may have changed the ID
-
-    const index = params.findIndex(function (i) {
-        return i.param_id === param_id;
-    });
-
-    params[index].param_name = postData.param_name;
-    params[index].param_value = postData.param_value;
-    params[index].param_last_updated = new Date().toISOString();
-
-    const variables = {
-        input: {
-            id: org.id,
-            org_params: params && params.length ? [...params] : [],
-        }, // key is "input" based on the mutation above
-    };
-
-    const data = await API.graphql({ query: updateOrg, variables });
-    if (data) {
-        return async (dispatch) => {
-            try {
-                const data = await API.graphql({ query: updateOrg, variables });
-                dispatch({
-                    type: UPDATE_PARAM,
-                    org: data.data.updateOrg,
-                });
-            } catch (err) {
-                dispatch({ type: UPDATE_PARAM_ERR, error: err });
-            }
-        };
-    }
-};
-
-export const addInsight = async (postData, org) => {
-    const { insight_insight, insight_active } = postData;
-
-    const variables = {
-        input: {
-            id: org.id,
-            org_insights:
-                org.org_insights && org.org_insights.length
-                    ? [
-                          ...org.org_insights,
-                          {
+        const variables = {
+            input: {
+                id: org.id,
+                org_insights:
+                    org.org_insights && org.org_insights.length
+                        ? [
+                              ...org.org_insights,
+                              {
+                                  insight_id: uuidv4(),
+                                  insight_insight,
+                                  insight_active,
+                                  insight_last_updated: new Date().toISOString(),
+                                  insight_created: new Date().toISOString(),
+                              },
+                          ]
+                        : {
                               insight_id: uuidv4(),
                               insight_insight,
                               insight_active,
                               insight_last_updated: new Date().toISOString(),
                               insight_created: new Date().toISOString(),
                           },
-                      ]
-                    : {
-                          insight_id: uuidv4(),
-                          insight_insight,
-                          insight_active,
-                          insight_last_updated: new Date().toISOString(),
-                          insight_created: new Date().toISOString(),
-                      },
-        }, // key is "input" based on the mutation above
-    };
-
-    const data = await API.graphql({ query: updateOrg, variables });
-
-    if (data) {
-        return async (dispatch) => {
-            try {
-                const data = await API.graphql({ query: updateOrg, variables });
-                dispatch({
-                    type: ADD_INSIGHT,
-                    org: data.data.updateOrg,
-                });
-            } catch (err) {
-                dispatch({ type: ADD_INSIGHT_ERR, error: err });
-            }
+            }, // key is "input" based on the mutation above
         };
-    }
+
+        try {
+            const data = await API.graphql({
+                query: updateOrg,
+                variables,
+            });
+            dispatch({
+                type: ADD_INSIGHT,
+                org: data.data.updateOrg,
+            });
+        } catch (err) {
+            dispatch({ type: ADD_INSIGHT_ERR, error: err });
+        }
+    };
 };
 
-export const delInsight = async (postData, org) => {
-    const { insight_id } = postData;
-    const insights = org.org_insights;
+export const delInsight = (postData, org) => {
+    return async (dispatch) => {
+        dispatch({ type: IS_LOADING });
+        const { insight_id } = postData;
+        const insights = org.org_insights;
 
-    insights.splice(
-        insights.findIndex(function (i) {
-            return i.id === insight_id;
-        }),
-        1
-    );
+        insights.splice(
+            insights.findIndex(function (i) {
+                return i.id === insight_id;
+            }),
+            1
+        );
 
-    const variables = {
-        input: {
-            id: org.id,
-            org_insights: insights && insights.length ? [...insights] : [],
-        }, // key is "input" based on the mutation above
-    };
-
-    const data = await API.graphql({ query: updateOrg, variables });
-
-    if (data) {
-        return async (dispatch) => {
-            try {
-                const data = await API.graphql({ query: updateOrg, variables });
-                dispatch({
-                    type: DELETE_INSIGHT,
-                    org: data.data.updateOrg,
-                });
-            } catch (err) {
-                dispatch({ type: DELETE_INSIGHT_ERR, error: err });
-            }
+        const variables = {
+            input: {
+                id: org.id,
+                org_insights: insights && insights.length ? [...insights] : [],
+            }, // key is "input" based on the mutation above
         };
-    }
+
+        try {
+            const data = await API.graphql({
+                query: updateOrg,
+                variables,
+            });
+            dispatch({
+                type: DELETE_INSIGHT,
+                org: data.data.updateOrg,
+            });
+        } catch (err) {
+            dispatch({ type: DELETE_INSIGHT_ERR, error: err });
+        }
+    };
 };
 
-export const updateInsight = async (insight, postData, org) => {
-    const insight_id = insight.insight_id;
-    let insights = org.org_insights;
+export const updateInsight = (insight, postData, org) => {
+    return async (dispatch) => {
+        dispatch({ type: IS_LOADING });
+        const insight_id = insight.insight_id;
+        let insights = org.org_insights;
 
-    //find by original ID as the user may have changed the ID
+        //find by original ID as the user may have changed the ID
 
-    const index = insights.findIndex(function (i) {
-        return i.insight_id === insight_id;
-    });
+        const index = insights.findIndex(function (i) {
+            return i.insight_id === insight_id;
+        });
 
-    insights[index].insight_insight = postData.insight_insight;
-    insights[index].insight_active = postData.insight_active;
-    insights[index].insight_last_updated = new Date().toISOString();
+        insights[index].insight_insight = postData.insight_insight;
+        insights[index].insight_active = postData.insight_active;
+        insights[index].insight_last_updated = new Date().toISOString();
 
-    const variables = {
-        input: {
-            id: org.id,
-            org_insights: insights && insights.length ? [...insights] : [],
-        }, // key is "input" based on the mutation above
-    };
-
-    const data = await API.graphql({ query: updateOrg, variables });
-
-    if (data) {
-        return async (dispatch) => {
-            try {
-                const data = await API.graphql({ query: updateOrg, variables });
-                dispatch({
-                    type: UPDATE_INSIGHT,
-                    org: data.data.updateOrg,
-                });
-            } catch (err) {
-                dispatch({ type: UPDATE_INSIGHT_ERR, error: err });
-            }
+        const variables = {
+            input: {
+                id: org.id,
+                org_insights: insights && insights.length ? [...insights] : [],
+            }, // key is "input" based on the mutation above
         };
-    }
+
+        try {
+            const data = await API.graphql({
+                query: updateOrg,
+                variables,
+            });
+            dispatch({
+                type: UPDATE_INSIGHT,
+                org: data.data.updateOrg,
+            });
+        } catch (err) {
+            dispatch({ type: UPDATE_INSIGHT_ERR, error: err });
+        }
+    };
 };
 
-export const addUpdate = async (postData, org) => {
-    const variables = {
-        input: {
-            id: org.id,
-            org_updates:
-                org.org_updates && org.org_updates.length
-                    ? [
-                          ...org.org_updates,
-                          {
+export const addUpdate = (postData, org) => {
+    return async (dispatch) => {
+        dispatch({ type: IS_LOADING });
+        const variables = {
+            input: {
+                id: org.id,
+                org_updates:
+                    org.org_updates && org.org_updates.length
+                        ? [
+                              ...org.org_updates,
+                              {
+                                  ...postData,
+                                  update_id: uuidv4(),
+                                  update_last_updated: new Date().toISOString(),
+                                  update_created: new Date().toISOString(),
+                              },
+                          ]
+                        : {
                               ...postData,
                               update_id: uuidv4(),
                               update_last_updated: new Date().toISOString(),
                               update_created: new Date().toISOString(),
                           },
-                      ]
-                    : {
-                          ...postData,
-                          update_id: uuidv4(),
-                          update_last_updated: new Date().toISOString(),
-                          update_created: new Date().toISOString(),
-                      },
-        }, // key is "input" based on the mutation above
-    };
-
-    const data = await API.graphql({ query: updateOrg, variables });
-
-    if (data) {
-        return async (dispatch) => {
-            try {
-                const data = await API.graphql({ query: updateOrg, variables });
-                dispatch({
-                    type: ADD_UPDATE,
-                    org: data.data.updateOrg,
-                });
-            } catch (err) {
-                dispatch({ type: ADD_UPDATE_ERR, error: err });
-            }
+            }, // key is "input" based on the mutation above
         };
-    }
+
+        try {
+            const data = await API.graphql({ query: updateOrg, variables });
+            dispatch({
+                type: ADD_UPDATE,
+                org: data.data.updateOrg,
+            });
+        } catch (err) {
+            dispatch({ type: ADD_UPDATE_ERR, error: err });
+        }
+    };
 };
 
-export const delUpdate = async (postData, org) => {
-    const { update_id } = postData;
-    const updates = org.org_updates;
+export const delUpdate = (postData, org) => {
+    return async (dispatch) => {
+        dispatch({ type: IS_LOADING });
 
-    updates.splice(
-        updates.findIndex(function (i) {
-            return i.id === update_id;
-        }),
-        1
-    );
+        const { update_id } = postData;
+        const updates = org.org_updates;
 
-    const variables = {
-        input: {
-            id: org.id,
-            org_updates: updates && updates.length ? [...updates] : [],
-        }, // key is "input" based on the mutation above
-    };
-    const data = await API.graphql({ query: updateOrg, variables });
+        updates.splice(
+            updates.findIndex(function (i) {
+                return i.id === update_id;
+            }),
+            1
+        );
 
-    if (data) {
-        return async (dispatch) => {
-            try {
-                dispatch({
-                    type: DELETE_UPDATE,
-                    org: data.data.updateOrg,
-                });
-            } catch (err) {
-                dispatch({ type: DELETE_UPDATE_ERR, error: err });
-            }
+        const variables = {
+            input: {
+                id: org.id,
+                org_updates: updates && updates.length ? [...updates] : [],
+            }, // key is "input" based on the mutation above
         };
-    }
+        const data = await API.graphql({ query: updateOrg, variables });
+
+        try {
+            dispatch({
+                type: DELETE_UPDATE,
+                org: data.data.updateOrg,
+            });
+        } catch (err) {
+            dispatch({ type: DELETE_UPDATE_ERR, error: err });
+        }
+    };
 };
 
-export const updateUpdate = async (update, postData, org) => {
-    const update_id = update.update_id;
-    let updates = org.org_updates;
+export const updateUpdate = (update, postData, org) => {
+    return async (dispatch) => {
+        dispatch({ type: IS_LOADING });
+        const update_id = update.update_id;
+        let updates = org.org_updates;
 
-    //find by original ID as the user may have changed the ID
+        //find by original ID as the user may have changed the ID
 
-    const index = updates.findIndex(function (i) {
-        return i.update_id === update_id;
-    });
+        const index = updates.findIndex(function (i) {
+            return i.update_id === update_id;
+        });
 
-    updates[index].update_update = postData.update_update;
-    updates[index].update_active = postData.update_active;
-    updates[index].update_url = postData.update_url;
-    updates[index].update_brand_id = postData.update_brand_id;
-    updates[index].update_brand_name = postData.update_brand_name;
-    updates[index].update_customer_id = postData.update_customer_id;
-    updates[index].update_customer_name = postData.update_customer_name;
-    updates[index].update_sku_description = postData.update_sku_description;
-    updates[index].update_sku_id = postData.update_sku_id;
-    updates[index].update_sku_number = postData.update_sku_number;
+        updates[index].update_update = postData.update_update;
+        updates[index].update_active = postData.update_active;
+        updates[index].update_url = postData.update_url;
+        updates[index].update_brand_id = postData.update_brand_id;
+        updates[index].update_brand_name = postData.update_brand_name;
+        updates[index].update_customer_id = postData.update_customer_id;
+        updates[index].update_customer_name = postData.update_customer_name;
+        updates[index].update_sku_description = postData.update_sku_description;
+        updates[index].update_sku_id = postData.update_sku_id;
+        updates[index].update_sku_number = postData.update_sku_number;
 
-    updates[index].update_last_updated = new Date().toISOString();
-    const variables = {
-        input: {
-            id: org.id,
-            org_updates: updates && updates.length ? [...updates] : [],
-        }, // key is "input" based on the mutation above
-    };
-
-    const data = await API.graphql({ query: updateOrg, variables });
-
-    if (data) {
-        return async (dispatch) => {
-            try {
-                // const data = await API.graphql({ query: updateOrg, variables });
-                dispatch({
-                    type: UPDATE_UPDATE,
-                    org: data.data.updateOrg,
-                });
-            } catch (err) {
-                dispatch({ type: UPDATE_UPDATE_ERR, error: err });
-            }
+        updates[index].update_last_updated = new Date().toISOString();
+        const variables = {
+            input: {
+                id: org.id,
+                org_updates: updates && updates.length ? [...updates] : [],
+            }, // key is "input" based on the mutation above
         };
-    }
+
+        const data = await API.graphql({ query: updateOrg, variables });
+
+        try {
+            // const data = await API.graphql({ query: updateOrg, variables });
+            dispatch({
+                type: UPDATE_UPDATE,
+                org: data.data.updateOrg,
+                loading: false,
+            });
+        } catch (err) {
+            dispatch({ type: UPDATE_UPDATE_ERR, error: err });
+        }
+    };
 };
 
 export const addCustomer = (customer, sku, org) => {

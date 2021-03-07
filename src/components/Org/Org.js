@@ -43,7 +43,24 @@ import { onUpdateOrg } from "../../graphql/subscriptions";
 function Org(props) {
     let location = useLocation();
 
-    const { addSku, fetchOrg, loadedOrg, loading, history } = props;
+    const {
+        addSku,
+        fetchOrg,
+        loadedOrg,
+        loading,
+        history,
+        updateUpdate,
+        delUpdate,
+        addUpdate,
+        updateInsight,
+        delInsight,
+        addInsight,
+        delParam,
+        updateParam,
+        addParam,
+        delSku,
+        updateSku,
+    } = props;
     const [activeTab, setActiveTab] = useState(0);
 
     useEffect(() => {
@@ -68,47 +85,47 @@ function Org(props) {
     };
 
     const DeleteSku = (orgObject) => {
-        delSku(orgObject, loadedOrg);
+        return delSku(orgObject, loadedOrg);
     };
 
     const UpdateSku = (sku, orgObject) => {
-        updateSku(sku, orgObject, loadedOrg);
+        return updateSku(sku, orgObject, loadedOrg);
     };
 
     const AddParam = (orgObject) => {
-        addParam(orgObject, loadedOrg);
+        return addParam(orgObject, loadedOrg);
     };
 
     const UpdateParam = (param, orgObject) => {
-        updateParam(param, orgObject, loadedOrg);
+        return updateParam(param, orgObject, loadedOrg);
     };
 
     const DeleteParam = (orgObject) => {
-        delParam(orgObject, loadedOrg);
+        return delParam(orgObject, loadedOrg);
     };
 
     const AddInsight = (orgObject) => {
-        addInsight(orgObject, loadedOrg);
+        return addInsight(orgObject, loadedOrg);
     };
 
     const UpdateInsight = (param, orgObject) => {
-        updateInsight(param, orgObject, loadedOrg);
+        return updateInsight(param, orgObject, loadedOrg);
     };
 
     const DeleteInsight = (orgObject) => {
-        delInsight(orgObject, loadedOrg);
+        return delInsight(orgObject, loadedOrg);
     };
 
     const AddUpdate = (orgObject) => {
-        addUpdate(orgObject, loadedOrg);
+        return addUpdate(orgObject, loadedOrg);
     };
 
     const DeleteUpdate = (orgObject) => {
-        delUpdate(orgObject, loadedOrg);
+        return delUpdate(orgObject, loadedOrg);
     };
 
     const UpdateUpdate = (update, orgObject) => {
-        updateUpdate(update, orgObject, loadedOrg);
+        return updateUpdate(update, orgObject, loadedOrg);
     };
 
     const gotoSku = (sku) => {
@@ -229,4 +246,15 @@ export default connect(mapStateToProps, {
     fetchOrg,
     fetchOrgs,
     addSku,
+    updateUpdate,
+    delUpdate,
+    addUpdate,
+    updateInsight,
+    delInsight,
+    addInsight,
+    delParam,
+    updateParam,
+    addParam,
+    delSku,
+    updateSku,
 })(Org);

@@ -225,8 +225,8 @@ function Sku(props) {
                             <Text fontSize="sm" m="20px">
                                 No
                                 {activeTab === 0
-                                    ? "Customers"
-                                    : "Recommendations"}{" "}
+                                    ? " Customers"
+                                    : " Recommendations"}{" "}
                                 exist for {loadedSku.sku_id}, please create one
                                 by clicking on 'Add'.
                             </Text>
