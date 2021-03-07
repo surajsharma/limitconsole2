@@ -58,6 +58,9 @@ function Customers(props) {
         addCondition,
         editCondition,
         delCondition,
+        addPromotion,
+        editPromotion,
+        delPromotion,
     } = props;
 
     const [activeTab, setActiveTab] = useState(0);
@@ -144,15 +147,21 @@ function Customers(props) {
     };
 
     const EditPromotion = (promo, orgObject) => {
-        editPromotion(orgObject, promo, loadedCustomer, loadedSku, loadedOrg);
+        return editPromotion(
+            orgObject,
+            promo,
+            loadedCustomer,
+            loadedSku,
+            loadedOrg
+        );
     };
 
     const AddPromotion = (promo) => {
-        addPromotion(promo, loadedCustomer, loadedSku, loadedOrg);
+        return addPromotion(promo, loadedCustomer, loadedSku, loadedOrg);
     };
 
     const DeletePromotion = (promo) => {
-        delPromotion(promo, loadedCustomer, loadedSku, loadedOrg);
+        return delPromotion(promo, loadedCustomer, loadedSku, loadedOrg);
     };
 
     const PromotionRow = ({ p }) => {
@@ -358,4 +367,7 @@ export default connect(mapStateToProps, {
     addCondition,
     editCondition,
     delCondition,
+    editPromotion,
+    addPromotion,
+    delPromotion,
 })(Customers);

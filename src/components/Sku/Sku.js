@@ -48,6 +48,7 @@ function Sku(props) {
         history,
         loadedSku,
         addCustomer,
+        editCustomer,
         delCustomer,
         fetchAnSku,
     } = props;
@@ -113,7 +114,7 @@ function Sku(props) {
     };
 
     const EditCustomer = (customer, orgObject) => {
-        editCustomer(customer, orgObject, loadedSku, loadedOrg);
+        return editCustomer(customer, orgObject, loadedSku, loadedOrg);
     };
 
     const DeleteCustomer = (customer) => {
@@ -251,4 +252,5 @@ export default connect(mapStateToProps, {
     addSku,
     addCustomer,
     delCustomer,
+    editCustomer,
 })(Sku);

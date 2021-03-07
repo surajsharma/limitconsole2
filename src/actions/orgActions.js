@@ -678,42 +678,43 @@ export const addCustomer = (customer, sku, org) => {
     };
 };
 
-export const editCustomer = async (customer, postData, sku, org) => {
-    let skus = org.org_skus;
+export const editCustomer = (customer, postData, sku, org) => {
+    return async (dispatch) => {
+        dispatch({ type: IS_LOADING });
+        let skus = org.org_skus;
 
-    const newCustomer = { ...customer, ...postData };
-    newCustomer.customer_last_updated = new Date().toISOString();
+        const newCustomer = { ...customer, ...postData };
+        newCustomer.customer_last_updated = new Date().toISOString();
 
-    const customer_index = sku.sku_customer.findIndex(
-        (c) => c.customer_id === customer.customer_id
-    );
+        const customer_index = sku.sku_customer.findIndex(
+            (c) => c.customer_id === customer.customer_id
+        );
 
-    const newCustomers = sku.sku_customer;
-    newCustomers[customer_index] = newCustomer;
+        const newCustomers = sku.sku_customer;
+        newCustomers[customer_index] = newCustomer;
 
-    const sku_index = org.org_skus.findIndex((s) => s.sku_id === sku.sku_id);
+        const sku_index = org.org_skus.findIndex(
+            (s) => s.sku_id === sku.sku_id
+        );
 
-    skus[sku_index].sku_customer = newCustomers;
+        skus[sku_index].sku_customer = newCustomers;
 
-    const variables = {
-        input: {
-            id: org.id,
-            org_skus: skus,
-        },
-    };
-
-    const data = await API.graphql(graphqlOperation(updateOrg, variables));
-
-    if (data) {
-        return async (dispatch) => {
-            dispatch({
-                type: EDIT_CUSTOMER,
-                org: data.data.updateOrg,
-                sku: skus[sku_index],
-                loading: false,
-            });
+        const variables = {
+            input: {
+                id: org.id,
+                org_skus: skus,
+            },
         };
-    }
+
+        const data = await API.graphql(graphqlOperation(updateOrg, variables));
+
+        dispatch({
+            type: EDIT_CUSTOMER,
+            org: data.data.updateOrg,
+            sku: skus[sku_index],
+            loading: false,
+        });
+    };
 };
 
 export const delCustomer = (postData, sku, org) => {
@@ -925,151 +926,148 @@ export const delCondition = (c, customer, sku, org) => {
     };
 };
 
-export const addPromotion = async (p, customer, sku, org) => {
-    let newSkus = org.org_skus;
+export const addPromotion = (p, customer, sku, org) => {
+    return async (dispatch) => {
+        dispatch({ type: IS_LOADING });
+        let newSkus = org.org_skus;
 
-    const sku_index = newSkus.findIndex((s) => s.sku_id === sku.sku_id);
+        const sku_index = newSkus.findIndex((s) => s.sku_id === sku.sku_id);
 
-    const cus_index = sku.sku_customer.findIndex(
-        (c) => c.customer_id === customer.customer_id
-    );
+        const cus_index = sku.sku_customer.findIndex(
+            (c) => c.customer_id === customer.customer_id
+        );
 
-    const promotions = customer.customer_promotions
-        ? customer.customer_promotions
-        : [];
+        const promotions = customer.customer_promotions
+            ? customer.customer_promotions
+            : [];
 
-    const promotion = {
-        promotion_promotion: p.promotion_promotion,
-        promotion_start_date: p.promotion_start_date,
-        promotion_end_date: p.promotion_end_date,
-        promotion_last_updated: new Date().toISOString(),
-        promotion_created: new Date().toISOString(),
-        promotion_id: uuidv4(),
-    };
-
-    let newPromotions = promotions;
-
-    newPromotions.push(promotion);
-
-    let newCustomer = newSkus[sku_index].sku_customer[cus_index];
-
-    newCustomer.customer_promotions = newPromotions;
-    newSkus[sku_index].sku_customer[cus_index] = newCustomer;
-
-    const variables = {
-        input: {
-            id: org.id,
-            org_skus: newSkus,
-        },
-    };
-
-    const data = await API.graphql(graphqlOperation(updateOrg, variables));
-
-    if (data) {
-        return async (dispatch) => {
-            dispatch({
-                type: ADD_PROMOTION,
-                org: data.data.updateOrg,
-                sku: newSkus[sku_index],
-                customer: newCustomer,
-            });
+        const promotion = {
+            promotion_promotion: p.promotion_promotion,
+            promotion_start_date: p.promotion_start_date,
+            promotion_end_date: p.promotion_end_date,
+            promotion_last_updated: new Date().toISOString(),
+            promotion_created: new Date().toISOString(),
+            promotion_id: uuidv4(),
         };
-    }
+
+        let newPromotions = promotions;
+
+        newPromotions.push(promotion);
+
+        let newCustomer = newSkus[sku_index].sku_customer[cus_index];
+
+        newCustomer.customer_promotions = newPromotions;
+        newSkus[sku_index].sku_customer[cus_index] = newCustomer;
+
+        const variables = {
+            input: {
+                id: org.id,
+                org_skus: newSkus,
+            },
+        };
+
+        const data = await API.graphql(graphqlOperation(updateOrg, variables));
+
+        dispatch({
+            type: ADD_PROMOTION,
+            org: data.data.updateOrg,
+            sku: newSkus[sku_index],
+            customer: newCustomer,
+        });
+    };
 };
 
-export const editPromotion = async (p, promotion, customer, sku, org) => {
-    let newSkus = org.org_skus;
-    const sku_index = newSkus.findIndex((s) => s.sku_id === sku.sku_id);
+export const editPromotion = (p, promotion, customer, sku, org) => {
+    return async (dispatch) => {
+        dispatch({ type: IS_LOADING });
+        let newSkus = org.org_skus;
+        const sku_index = newSkus.findIndex((s) => s.sku_id === sku.sku_id);
 
-    const cus_index = sku.sku_customer.findIndex(
-        (c) => c.customer_id === customer.customer_id
-    );
+        const cus_index = sku.sku_customer.findIndex(
+            (c) => c.customer_id === customer.customer_id
+        );
 
-    const promo_index = newSkus[sku_index].sku_customer[
-        cus_index
-    ].customer_promotions.findIndex(
-        (pro) => pro.promotion_id === promotion.promotion_id
-    );
+        const promo_index = newSkus[sku_index].sku_customer[
+            cus_index
+        ].customer_promotions.findIndex(
+            (pro) => pro.promotion_id === promotion.promotion_id
+        );
 
-    let promotions = customer.customer_promotions;
+        let promotions = customer.customer_promotions;
 
-    const newPromotion = {
-        promotion_promotion: p.promotion_promotion,
-        promotion_start_date: p.promotion_start_date,
-        promotion_end_date: p.promotion_end_date,
-        promotion_id: promotion.promotion_id,
-        promotion_created: promotion.promotion_created,
-        promotion_last_updated: new Date().toISOString(),
-    };
-
-    promotions[promo_index] = newPromotion;
-
-    let newCustomer = newSkus[sku_index].sku_customer[cus_index];
-
-    newCustomer.customer_promotions = promotions;
-    newSkus[sku_index].sku_customer[cus_index] = newCustomer;
-
-    const variables = {
-        input: {
-            id: org.id,
-            org_skus: newSkus,
-        },
-    };
-
-    const data = await API.graphql(graphqlOperation(updateOrg, variables));
-
-    if (data) {
-        return async (dispatch) => {
-            dispatch({
-                type: EDIT_PROMOTION,
-                org: data.data.updateOrg,
-                sku: newSkus[sku_index],
-                customer: newCustomer,
-            });
+        const newPromotion = {
+            promotion_promotion: p.promotion_promotion,
+            promotion_start_date: p.promotion_start_date,
+            promotion_end_date: p.promotion_end_date,
+            promotion_id: promotion.promotion_id,
+            promotion_created: promotion.promotion_created,
+            promotion_last_updated: new Date().toISOString(),
         };
-    }
+
+        promotions[promo_index] = newPromotion;
+
+        let newCustomer = newSkus[sku_index].sku_customer[cus_index];
+
+        newCustomer.customer_promotions = promotions;
+        newSkus[sku_index].sku_customer[cus_index] = newCustomer;
+
+        const variables = {
+            input: {
+                id: org.id,
+                org_skus: newSkus,
+            },
+        };
+
+        const data = await API.graphql(graphqlOperation(updateOrg, variables));
+
+        dispatch({
+            type: EDIT_PROMOTION,
+            org: data.data.updateOrg,
+            sku: newSkus[sku_index],
+            customer: newCustomer,
+        });
+    };
 };
 
-export const delPromotion = async (p, customer, sku, org) => {
-    let newSkus = org.org_skus;
-    const sku_index = newSkus.findIndex((s) => s.sku_id === sku.sku_id);
+export const delPromotion = (p, customer, sku, org) => {
+    return async (dispatch) => {
+        dispatch({ type: IS_LOADING });
+        let newSkus = org.org_skus;
+        const sku_index = newSkus.findIndex((s) => s.sku_id === sku.sku_id);
 
-    const cus_index = sku.sku_customer.findIndex(
-        (c) => c.customer_id === customer.customer_id
-    );
+        const cus_index = sku.sku_customer.findIndex(
+            (c) => c.customer_id === customer.customer_id
+        );
 
-    const promo_index = newSkus[sku_index].sku_customer[
-        cus_index
-    ].customer_promotions.findIndex(
-        (pro) => pro.promotion_id === p.promotion_id
-    );
+        const promo_index = newSkus[sku_index].sku_customer[
+            cus_index
+        ].customer_promotions.findIndex(
+            (pro) => pro.promotion_id === p.promotion_id
+        );
 
-    let promotions = customer.customer_promotions;
+        let promotions = customer.customer_promotions;
 
-    promotions.splice(promo_index, 1);
+        promotions.splice(promo_index, 1);
 
-    let newCustomer = newSkus[sku_index].sku_customer[cus_index];
+        let newCustomer = newSkus[sku_index].sku_customer[cus_index];
 
-    newCustomer.customer_promotions = promotions;
-    newSkus[sku_index].sku_customer[cus_index] = newCustomer;
+        newCustomer.customer_promotions = promotions;
+        newSkus[sku_index].sku_customer[cus_index] = newCustomer;
 
-    const variables = {
-        input: {
-            id: org.id,
-            org_skus: newSkus,
-        },
-    };
-
-    const data = await API.graphql(graphqlOperation(updateOrg, variables));
-
-    if (data) {
-        return async (dispatch) => {
-            dispatch({
-                type: DELETE_PROMOTION,
-                org: data.data.updateOrg,
-                sku: newSkus[sku_index],
-                customer: newCustomer,
-            });
+        const variables = {
+            input: {
+                id: org.id,
+                org_skus: newSkus,
+            },
         };
-    }
+
+        const data = await API.graphql(graphqlOperation(updateOrg, variables));
+
+        dispatch({
+            type: DELETE_PROMOTION,
+            org: data.data.updateOrg,
+            sku: newSkus[sku_index],
+            customer: newCustomer,
+        });
+    };
 };
