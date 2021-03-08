@@ -820,6 +820,7 @@ export const addCondition = (c, customer, sku, org) => {
 export const editCondition = (c, condition, customer, sku, org) => {
     return async (dispatch) => {
         dispatch({ type: IS_LOADING });
+
         let newSkus = org.org_skus;
 
         const sku_index = newSkus.findIndex((s) => s.sku_id === sku.sku_id);
@@ -831,14 +832,15 @@ export const editCondition = (c, condition, customer, sku, org) => {
         const con_index = newSkus[sku_index].sku_customer[
             cus_index
         ].customer_conditions.findIndex(
-            (cus) => cus.customer_id === c.customer_id
+            (cus) => cus.condition_id === condition.condition_id
         );
 
+        console.log(sku_index, cus_index, con_index);
         let conditions = customer.customer_conditions;
 
         const newCondition = {
+            ...condition,
             ...c,
-            condition_id: condition.condition_id,
             condition_last_updated: new Date().toISOString(),
         };
 
@@ -847,6 +849,7 @@ export const editCondition = (c, condition, customer, sku, org) => {
         let newCustomer = newSkus[sku_index].sku_customer[cus_index];
 
         newCustomer.customer_conditions = conditions;
+
         newSkus[sku_index].sku_customer[cus_index] = newCustomer;
 
         const variables = {
@@ -857,6 +860,7 @@ export const editCondition = (c, condition, customer, sku, org) => {
         };
 
         const data = await API.graphql(graphqlOperation(updateOrg, variables));
+
         dispatch({
             type: EDIT_CONDITION,
             org: data.data.updateOrg,
@@ -879,7 +883,7 @@ export const delCondition = (c, customer, sku, org) => {
         const con_index = newSkus[sku_index].sku_customer[
             cus_index
         ].customer_conditions.findIndex(
-            (cus) => cus.customer_id === c.customer_id
+            (cus) => cus.condition_id === c.condition_id
         );
 
         let conditions = customer.customer_conditions;
@@ -906,6 +910,7 @@ export const delCondition = (c, customer, sku, org) => {
                 org: data.data.updateOrg,
                 sku: newSkus[sku_index],
                 customer: newCustomer,
+                loading: false,
             });
         }
     };
