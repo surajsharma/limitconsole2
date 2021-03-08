@@ -128,7 +128,7 @@ function Customers(props) {
         );
     };
 
-    const EditCondition = (condition, orgObject) => {
+    const EditCondition = (orgObject, condition) => {
         return editCondition(
             orgObject,
             condition,
@@ -299,12 +299,12 @@ function Customers(props) {
             </Flex>
             <br />
             {loading ? (
-                <>
+                <React.Fragment>
                     <Center>
                         <CircularProgress isIndeterminate color="purple.300" />
                     </Center>
                     <br />
-                </>
+                </React.Fragment>
             ) : (
                 <Table size="sm">
                     {

@@ -70,7 +70,6 @@ const rootReducer = (state = initialState, action) => {
         case FETCH_ORG_ERR:
             return { ...state, error: action.error, loading: false };
         case FETCH_SKU:
-            console.log(action, "FETCH SKU");
             return {
                 ...state,
                 loadedSku: action.sku,

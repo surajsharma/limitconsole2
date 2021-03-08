@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 
 import { API } from "aws-amplify";
@@ -83,6 +83,33 @@ function OrgList(props) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    const [activeTab, setActiveTab] = useState(0);
+
+    const Tabs = () => {
+        return (
+            <TabBar>
+                {["Org List", "Defaults"].map((t, index) =>
+                    index === activeTab ? (
+                        <TabBarElement
+                            active
+                            onClick={() => setActiveTab(index)}
+                            key={index}
+                        >
+                            {t}
+                        </TabBarElement>
+                    ) : (
+                        <TabBarElement
+                            key={index}
+                            onClick={() => setActiveTab(index)}
+                        >
+                            {t}
+                        </TabBarElement>
+                    )
+                )}
+            </TabBar>
+        );
+    };
+
     const AddNewOrg = (orgObject) => {
         createNewOrg(orgObject);
     };
@@ -111,9 +138,22 @@ function OrgList(props) {
         <Container>
             <Flex justify={"space-between"}>
                 <TopContainer>
-                    <TabBar>
-                        <TabBarElement active>Org List</TabBarElement>
-                    </TabBar>
+                    <Tabs>
+                        {
+                            {
+                                0: (
+                                    <TabBarElement active>
+                                        Org List
+                                    </TabBarElement>
+                                ),
+                                1: (
+                                    <TabBarElement active>
+                                        Defaults
+                                    </TabBarElement>
+                                ),
+                            }[activeTab]
+                        }
+                    </Tabs>
                     <AddOrgModal AddNewOrg={AddNewOrg} />
                 </TopContainer>
             </Flex>
@@ -167,7 +207,9 @@ function OrgList(props) {
             ) : (
                 <Center>
                     <Text fontSize="sm" m="20px">
-                        No Orgs exist, please create one by clicking on 'Add'.
+                        No
+                        {activeTab === 0 ? " Orgs" : " Defaults"} exist, please
+                        create one by clicking on 'Add'.
                     </Text>
                 </Center>
             )}

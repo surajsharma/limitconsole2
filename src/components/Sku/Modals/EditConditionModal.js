@@ -105,13 +105,16 @@ function EditConditionModal({ editCondition, deleteCondition, condition }) {
                             <ButtonU onClick={onClose}>Cancel</ButtonU>&nbsp;
                             <ButtonF
                                 onClick={() => {
-                                    editCondition(condition, {
-                                        condition_condition: _condition,
-                                        condition_high: highValue,
-                                        condition_low: lowValue,
-                                        condition_value: value,
-                                        condition_message: message,
-                                    });
+                                    editCondition(
+                                        {
+                                            condition_condition: _condition,
+                                            condition_high: highValue,
+                                            condition_low: lowValue,
+                                            condition_value: value,
+                                            condition_message: message,
+                                        },
+                                        condition
+                                    );
                                     onClose();
                                 }}
                             >
