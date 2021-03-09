@@ -637,10 +637,8 @@ export const addCustomer = (customer, sku, org) => {
         });
 
         if (customers === null || customers === [] || customers.length === 0) {
-            console.log("customers is null", customers);
             customers = [customer];
         } else {
-            console.log("customers is not null", customers);
             customers = [...customers, customer];
         }
 
@@ -704,7 +702,6 @@ export const editCustomer = (customer, postData, sku, org) => {
 
 export const delCustomer = (postData, sku, org) => {
     return async (dispatch) => {
-        console.log("deleteing customers", postData);
         dispatch({ type: IS_LOADING });
         let newCustomers = sku.sku_customer;
         let newSkus = org.org_skus;
@@ -788,12 +785,6 @@ export const addCondition = (c, customer, sku, org) => {
         newCustomer.customer_conditions = newConditons;
         newSkus[sku_index].sku_customer[cus_index] = newCustomer;
 
-        console.log(
-            "🚀 ~ file: orgActions.js ~ line 796 ~ addCondition ~ newConditons",
-            newConditons,
-            newSkus
-        );
-
         const variables = {
             input: {
                 id: org.id,
@@ -802,11 +793,6 @@ export const addCondition = (c, customer, sku, org) => {
         };
 
         const data = await API.graphql(graphqlOperation(updateOrg, variables));
-
-        console.log(
-            "🚀 ~ file: orgActions.js ~ line 809 ~ addCondition ~ data",
-            data
-        );
 
         dispatch({
             type: ADD_CONDITION,

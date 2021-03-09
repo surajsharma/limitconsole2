@@ -31,6 +31,7 @@ import {
 
 import EditOrgModal from "./EditOrgModal";
 import AddOrgModal from "./AddOrgModal";
+import Defaults from "./Defaults";
 
 import Container from "../Common/Container";
 import TabBar from "../Common/TabBar";
@@ -134,6 +135,59 @@ function OrgList(props) {
         history.push(`/org/${org.id}`);
     };
 
+    const Orgs = (orgs) => {
+        if (orgs.orgs.length) {
+            return (
+                <Table size="sm">
+                    <Thead>
+                        <Tr>
+                            <Th>Org Name</Th>
+                            <Th>Org ID</Th>
+                            <Th>Updated</Th>
+                            <Th>{}</Th>
+                        </Tr>
+                    </Thead>
+                    <Tbody>
+                        {orgs.orgs &&
+                            orgs.orgs.map((org) => (
+                                <Tr
+                                    key={org.id}
+                                    _hover={{
+                                        background: "purple.100",
+                                        color: "purple.500",
+                                        cursor: "pointer",
+                                    }}
+                                >
+                                    <Td onClick={() => gotoOrg(org)}>
+                                        {org.org_name}
+                                    </Td>
+                                    <Td onClick={() => gotoOrg(org)}>
+                                        {org.org_id}
+                                    </Td>
+                                    <Td onClick={() => gotoOrg(org)}>
+                                        {org.updatedAt.split("T")[0]}
+                                    </Td>
+                                    <EditOrgModal
+                                        org={org}
+                                        deleteOrg={DeleteOrg}
+                                        updateOrg={UpdateOrg}
+                                    />
+                                </Tr>
+                            ))}
+                    </Tbody>
+                </Table>
+            );
+        } else {
+            return (
+                <Center>
+                    <Text fontSize="sm" m="20px">
+                        No Orgs exist, please create one by clicking on 'Add'.
+                    </Text>
+                </Center>
+            );
+        }
+    };
+
     return (
         <Container>
             <Flex justify={"space-between"}>
@@ -165,53 +219,15 @@ function OrgList(props) {
                     </Center>
                     <br />
                 </>
-            ) : orgs.length ? (
-                <Table size="sm">
-                    <Thead>
-                        <Tr>
-                            <Th>Org Name</Th>
-                            <Th>Org ID</Th>
-                            <Th>Updated</Th>
-                            <Th>{}</Th>
-                        </Tr>
-                    </Thead>
-                    <Tbody>
-                        {orgs &&
-                            orgs.map((org) => (
-                                <Tr
-                                    key={org.id}
-                                    _hover={{
-                                        background: "purple.100",
-                                        color: "purple.500",
-                                        cursor: "pointer",
-                                    }}
-                                >
-                                    <Td onClick={() => gotoOrg(org)}>
-                                        {org.org_name}
-                                    </Td>
-                                    <Td onClick={() => gotoOrg(org)}>
-                                        {org.org_id}
-                                    </Td>
-                                    <Td onClick={() => gotoOrg(org)}>
-                                        {org.updatedAt.split("T")[0]}
-                                    </Td>
-                                    <EditOrgModal
-                                        org={org}
-                                        deleteOrg={DeleteOrg}
-                                        updateOrg={UpdateOrg}
-                                    />
-                                </Tr>
-                            ))}
-                    </Tbody>
-                </Table>
             ) : (
-                <Center>
-                    <Text fontSize="sm" m="20px">
-                        No
-                        {activeTab === 0 ? " Orgs" : " Defaults"} exist, please
-                        create one by clicking on 'Add'.
-                    </Text>
-                </Center>
+                <>
+                    {
+                        {
+                            0: <Orgs orgs={orgs} />,
+                            1: <></>,
+                        }[activeTab]
+                    }
+                </>
             )}
         </Container>
     );
