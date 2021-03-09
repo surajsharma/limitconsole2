@@ -224,7 +224,7 @@ function OrgList(props) {
                     {
                         {
                             0: <Orgs orgs={orgs} />,
-                            1: <></>,
+                            1: <Defaults />,
                         }[activeTab]
                     }
                 </>
