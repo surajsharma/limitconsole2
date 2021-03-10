@@ -1,8 +1,8 @@
 import {
-    // ADD_DEFAULT,
+    ADD_DEFAULT,
     // EDIT_DEFAULT,
     // DELETE_DEFAULT,
-    // ADD_DEFAULT_ERR,
+    ADD_DEFAULT_ERR,
     // EDIT_DEFAULT_ERR,
     // DELETE_DEFAULT_ERR,
     FETCH_DEFAULT,
@@ -14,13 +14,14 @@ import {
 
 import { getDefault, listDefaults } from "../graphql/queries";
 
-import // createDefault,
-// updateDefault,
-// deleteDefault,
-"../graphql/mutations";
+import {
+    createDefault,
+    updateDefault,
+    deleteDefault,
+} from "../graphql/mutations";
 
 import { API } from "aws-amplify";
-// import { v4 as uuidv4 } from "uuid";
+import { v4 as uuidv4 } from "uuid";
 
 export const fetchDefault = (id) => {
     return async (dispatch) => {
@@ -51,6 +52,41 @@ export const fetchDefaults = (dispatch) => {
             });
         } catch (err) {
             dispatch({ type: FETCH_DEFAULTS_ERR, error: err });
+        }
+    };
+};
+
+export const addDefault = (c, defaults) => {
+    return async (dispatch) => {
+        dispatch({ type: IS_LOADING_DEFAULTS });
+
+        const condition = {
+            default_condition: c.condition_condition,
+            default_high: c.condition_high,
+            default_low: c.condition_low,
+            default_value: c.condition_value,
+            default_message: c.condition_message,
+            default_last_updated: new Date().toISOString(),
+            default_created: new Date().toISOString(),
+            default_id: uuidv4(),
+        };
+
+        let newDefaults = defaults;
+
+        newDefaults.push(condition);
+
+        try {
+            const data = await API.graphql({
+                query: createDefault,
+                variables: { input: condition },
+            });
+
+            dispatch({
+                type: ADD_DEFAULT,
+                org: data.data.createDefault,
+            });
+        } catch (err) {
+            dispatch({ type: ADD_DEFAULT_ERR, error: err });
         }
     };
 };

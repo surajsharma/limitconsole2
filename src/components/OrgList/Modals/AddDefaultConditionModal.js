@@ -19,7 +19,7 @@ import Input from "../../Common/Input";
 function AddDefaultConditionModal(props) {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
-    const { AddCondition } = props;
+    const { AddDefault } = props;
 
     const [condition, setCondition] = useState("");
     const [highValue, setHighValue] = useState("");
@@ -89,7 +89,7 @@ function AddDefaultConditionModal(props) {
                         <ButtonU onClick={onClose}>Cancel</ButtonU>&nbsp;
                         <ButtonF
                             onClick={() => {
-                                AddCondition({
+                                AddDefault({
                                     condition_condition: condition,
                                     condition_high: highValue,
                                     condition_low: lowValue,

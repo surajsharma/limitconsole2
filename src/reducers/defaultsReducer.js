@@ -9,6 +9,7 @@ import {
     FETCH_DEFAULT_ERR,
     FETCH_DEFAULTS,
     FETCH_DEFAULTS_ERR,
+    IS_LOADING_DEFAULTS,
 } from "../actions/types";
 
 const initialState = {
@@ -21,7 +22,7 @@ const initialState = {
 const defaultsReducer = (state = initialState, action) => {
     switch (action.type) {
         case FETCH_DEFAULT:
-            return { ...state, default: action.default, loading: false };
+            return { ...state, defaults: action.defaults, loading: false };
         case FETCH_DEFAULT_ERR:
             return { ...state, error: action.error, loading: false };
         case FETCH_DEFAULTS:
@@ -29,7 +30,7 @@ const defaultsReducer = (state = initialState, action) => {
         case FETCH_DEFAULTS_ERR:
             return { ...state, error: action.error, loading: false };
         case ADD_DEFAULT:
-            return { ...state, defaults: action.defaults };
+            return { ...state, defaults: action.defaults, loading: false };
         case ADD_DEFAULT_ERR:
             return { ...state, error: action.error };
         case EDIT_DEFAULT:
@@ -40,6 +41,8 @@ const defaultsReducer = (state = initialState, action) => {
             return { ...state, defaults: action.defaults };
         case DELETE_DEFAULT_ERR:
             return { ...state, error: action.error };
+        case IS_LOADING_DEFAULTS:
+            return { ...state, loading: true };
         default:
             return state;
     }

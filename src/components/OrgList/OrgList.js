@@ -10,6 +10,8 @@ import {
     deleteAnOrg,
 } from "../../actions/orgActions";
 
+import { addDefault } from "../../actions/defaultsActions";
+
 import {
     onCreateOrg,
     onUpdateOrg,
@@ -38,6 +40,8 @@ import TabBar from "../Common/TabBar";
 import TabBarElement from "../Common/TabBarElement";
 import TopContainer from "../Common/TopContainer";
 
+import AddDefaultConditionModal from "./Modals/AddDefaultConditionModal";
+
 function OrgList(props) {
     const {
         fetchOrgs,
@@ -47,6 +51,8 @@ function OrgList(props) {
         deleteAnOrg,
         loading,
         history,
+        defaults,
+        addDefault,
     } = props;
 
     useEffect(() => {
@@ -188,6 +194,10 @@ function OrgList(props) {
         }
     };
 
+    const AddDefault = (orgObject) => {
+        return addDefault(orgObject, defaults);
+    };
+
     return (
         <Container>
             <Flex justify={"space-between"}>
@@ -208,7 +218,16 @@ function OrgList(props) {
                             }[activeTab]
                         }
                     </Tabs>
-                    <AddOrgModal AddNewOrg={AddNewOrg} />
+                    {
+                        {
+                            0: <AddOrgModal AddNewOrg={AddNewOrg} />,
+                            1: (
+                                <AddDefaultConditionModal
+                                    AddDefault={AddDefault}
+                                />
+                            ),
+                        }[activeTab]
+                    }
                 </TopContainer>
             </Flex>
             <br />
@@ -238,6 +257,7 @@ const mapStateToProps = (state) => ({
     org: state.orgs.org,
     loading: state.orgs.loading,
     error: state.orgs.error,
+    defaults: state.defaults.defaults,
 });
 
 export default connect(mapStateToProps, {
@@ -245,4 +265,5 @@ export default connect(mapStateToProps, {
     createNewOrg,
     updateAnOrg,
     deleteAnOrg,
+    addDefault,
 })(OrgList);

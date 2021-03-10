@@ -20,13 +20,16 @@ import {
 
 import { fetchDefault, fetchDefaults } from "../../actions/defaultsActions";
 import EditDefaultConditionModal from "./Modals/EditDefaultConditionModal";
-import { onUpdateDefault } from "../../graphql/subscriptions";
+import {
+    onUpdateDefault,
+    onCreateDefault,
+    onDeleteDefault,
+} from "../../graphql/subscriptions";
 
 function Defaults(props) {
-    let location = useLocation();
-    let conditions = [];
+    // let location = useLocation();
 
-    const { fetchDefault, fetchDefaults } = props;
+    const { fetchDefault, fetchDefaults, defaults, loading, error } = props;
 
     // const org_id = location.pathname.split("/")[2];
     // const sku_id = location.pathname.split("/")[3];
@@ -34,131 +37,112 @@ function Defaults(props) {
 
     useEffect(() => {
         fetchDefaults();
-        // fetchOrg(org_id);
-        // if (loadedOrg.id) {
-        //     const sku_index = loadedOrg.org_skus.findIndex(
-        //         (i) => i.sku_id === sku_id
-        //     );
-        //     // customer
-        //     // fetchAnSku(sku_index, loadedOrg);
-        //     fetchCustomer(sku_index, cus_id, loadedOrg);
-        // } else {
-        //     history.push("/");
-        // }
-        // const subscriptionUpdate = API.graphql({
-        //     query: onUpdateOrg,
-        // }).subscribe({
-        //     next: (orgData) => {
-        //         // fetchOrg(org_id);
-        //         if (loadedOrg.id) {
-        //             const sku_index = loadedOrg.org_skus.findIndex(
-        //                 (i) => i.sku_id === sku_id
-        //             );
-        //             // customer
-        //             fetchAnSku(sku_index, loadedOrg);
-        //             fetchCustomer(sku_index, cus_id, loadedOrg);
-        //         }
-        //     },
-        // });
-        // return () => {
-        //     subscriptionUpdate.unsubscribe();
-        // };
+
+        const subscriptionCreate = API.graphql({
+            query: onCreateDefault,
+        }).subscribe({
+            next: (orgData) => {
+                fetchDefaults();
+            },
+        });
+        const subscriptionUpdate = API.graphql({
+            query: onUpdateDefault,
+        }).subscribe({
+            next: (orgData) => {
+                fetchDefaults();
+            },
+        });
+        const subscriptionDelete = API.graphql({
+            query: onDeleteDefault,
+        }).subscribe({
+            next: (orgData) => {
+                fetchDefaults();
+            },
+        });
+
+        return () => {
+            subscriptionCreate.unsubscribe();
+            subscriptionUpdate.unsubscribe();
+            subscriptionDelete.unsubscribe();
+        };
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-    // const EditCondition = (orgObject, condition) => {
-    //     return editCondition(
-    //         orgObject,
-    //         condition,
-    //         loadedCustomer,
-    //         loadedSku,
-    //         loadedOrg
-    //     );
-    // };
+    const EditDefault = (orgObject, condition) => {
+        // return editCondition(
+        //     orgObject,
+        //     condition,
+        //     loadedCustomer,
+        //     loadedSku,
+        //     loadedOrg
+        // );
+    };
 
-    // const DeleteCondition = (orgObject) => {
-    //     return delCondition(orgObject, loadedCustomer, loadedSku, loadedOrg);
-    // };
+    const DeleteDefault = (orgObject) => {
+        // return delCondition(orgObject, loadedCustomer, loadedSku, loadedOrg);
+    };
 
-    // const AddCondition = (orgObject) => {
-    //     return addCondition(orgObject, loadedCustomer, loadedSku, loadedOrg);
-    // };
+    const DefaultsRow = ({ c }) => {
+        return (
+            <Tr
+                key={c.condition_id + "con"}
+                _hover={{
+                    background: "purple.100",
+                    color: "purple.500",
+                    cursor: "pointer",
+                }}
+            >
+                <Td>{c.default_condition}</Td>
+                <Td>{c.default_high}</Td>
+                <Td>{c.default_low}</Td>
+                <Td>{c.default_value}</Td>
+                <Td>{c.default_message}</Td>
+                <Td>{c.default_last_updated.split("T")[0]}</Td>
+                <EditDefaultConditionModal
+                    editCondition={EditDefault}
+                    deleteCondition={DeleteDefault}
+                    condition={c}
+                />
+            </Tr>
+        );
+    };
 
-    // const ConditionRow = ({ c }) => {
-    //     return (
-    //         <Tr
-    //             key={c.condition_id + "con"}
-    //             _hover={{
-    //                 background: "purple.100",
-    //                 color: "purple.500",
-    //                 cursor: "pointer",
-    //             }}
-    //         >
-    //             <Td>{c.condition_condition}</Td>
-    //             <Td>{c.condition_high}</Td>
-    //             <Td>{c.condition_low}</Td>
-    //             <Td>{c.condition_value}</Td>
-    //             <Td>{c.condition_message}</Td>
-    //             <Td>{c.condition_last_updated.split("T")[0]}</Td>
-    //             <EditDefaultConditionModal
-    //                 editCondition={EditCondition}
-    //                 deleteCondition={DeleteCondition}
-    //                 condition={c}
-    //             />
-    //         </Tr>
-    //     );
-    // };
+    const Defaults = ({ defaults }) => {
+        return (
+            <Table size="sm">
+                <Thead>
+                    <Tr>
+                        <Th>Condition</Th>
+                        <Th>High</Th>
+                        <Th>Low</Th>
+                        <Th>Value</Th>
+                        <Th>Message</Th>
+                        <Th>Updated</Th>
+                        <Th></Th>
+                    </Tr>
+                </Thead>
+                <Tbody>
+                    {defaults &&
+                        defaults.map((c) => <DefaultsRow key={c.id} c={c} />)}
+                </Tbody>
+            </Table>
+        );
+    };
 
-    // const Conditions = ({ conditions }) => {
-    //     return (
-    //         <React.Fragment>
-    //             <Thead>
-    //                 <Tr>
-    //                     <Th>Condition</Th>
-    //                     <Th>High</Th>
-    //                     <Th>Low</Th>
-    //                     <Th>Value</Th>
-    //                     <Th>Message</Th>
-    //                     <Th>Updated</Th>
-    //                     <Th></Th>
-    //                 </Tr>
-    //             </Thead>
-    //             <Tbody>
-    //                 {conditions &&
-    //                     conditions.map((c) => (
-    //                         <ConditionRow key={c.condition_id} c={c} />
-    //                     ))}
-    //             </Tbody>
-    //         </React.Fragment>
-    //     );
-    // };
-
-    // if (loadedOrg.id) {
-    //     const sku_index = loadedOrg.org_skus.findIndex(
-    //         (i) => i.sku_id === sku_id
-    //     );
-
-    //     const cus_index = loadedOrg.org_skus[sku_index].sku_customer.findIndex(
-    //         (c) => c.customer_id === cus_id
-    //     );
-
-    //     conditions =
-    //         loadedOrg.org_skus[sku_index].sku_customer[cus_index]
-    //             .customer_conditions;
-    // }
-
-    return (
-        <Table size="sm">
-            {conditions && conditions.length ? (
-                <>Defaults Here</>
-            ) : (
-                <Center>
-                    <Text fontSize="sm" m="20px">
-                        No defaults exist, please create one by clicking on
-                        'Add'.
-                    </Text>
-                </Center>
-            )}
-        </Table>
+    return loading ? (
+        <>
+            <Center>
+                <CircularProgress isIndeterminate color="purple.300" />
+            </Center>
+            <br />
+        </>
+    ) : defaults && defaults.length ? (
+        <Defaults defaults={defaults} />
+    ) : (
+        <Center>
+            <Text fontSize="sm" m="20px">
+                No defaults exist, please create one by clicking on 'Add'.
+            </Text>
+        </Center>
     );
 }
 
