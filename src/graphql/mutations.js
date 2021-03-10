@@ -1,260 +1,260 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const createDefault = /* GraphQL */ `
-  mutation CreateDefault(
-    $condition: ModelDefaultConditionInput
-    $input: CreateDefaultInput!
-  ) {
-    createDefault(condition: $condition, input: $input) {
-      createdAt
-      default_condition
-      default_created
-      default_high
-      default_id
-      default_last_updated
-      default_low
-      default_message
-      default_value
-      id
-      updatedAt
-    }
-  }
-`;
 export const createOrg = /* GraphQL */ `
   mutation CreateOrg(
-    $condition: ModelOrgConditionInput
     $input: CreateOrgInput!
-  ) {
-    createOrg(condition: $condition, input: $input) {
-      createdAt
-      id
-      org_id
-      org_insights {
-        insight_active
-        insight_created
-        insight_id
-        insight_insight
-        insight_last_updated
-      }
-      org_last_updated
-      org_name
-      org_params {
-        param_created
-        param_id
-        param_last_updated
-        param_name
-        param_value
-      }
-      org_skus {
-        id
-        sku_created
-        sku_customer {
-          customer_created
-          customer_id
-          customer_last_updated
-          customer_name
-          id
-        }
-        sku_description
-        sku_id
-        sku_last_updated
-        sku_number
-        sku_recommendations {
-          recommendation_active
-          recommendation_created
-          recommendation_id
-          recommendation_last_updated
-          recommendation_recommendation
-        }
-      }
-      org_updates {
-        update_active
-        update_brand_id
-        update_brand_name
-        update_created
-        update_customer_id
-        update_customer_name
-        update_id
-        update_last_updated
-        update_sku_description
-        update_sku_id
-        update_sku_number
-        update_update
-        update_url
-      }
-      updatedAt
-    }
-  }
-`;
-export const deleteDefault = /* GraphQL */ `
-  mutation DeleteDefault(
-    $condition: ModelDefaultConditionInput
-    $input: DeleteDefaultInput!
-  ) {
-    deleteDefault(condition: $condition, input: $input) {
-      createdAt
-      default_condition
-      default_created
-      default_high
-      default_id
-      default_last_updated
-      default_low
-      default_message
-      default_value
-      id
-      updatedAt
-    }
-  }
-`;
-export const deleteOrg = /* GraphQL */ `
-  mutation DeleteOrg(
     $condition: ModelOrgConditionInput
-    $input: DeleteOrgInput!
   ) {
-    deleteOrg(condition: $condition, input: $input) {
-      createdAt
+    createOrg(input: $input, condition: $condition) {
       id
       org_id
-      org_insights {
-        insight_active
-        insight_created
-        insight_id
-        insight_insight
-        insight_last_updated
-      }
-      org_last_updated
       org_name
-      org_params {
-        param_created
-        param_id
-        param_last_updated
-        param_name
-        param_value
-      }
       org_skus {
         id
-        sku_created
-        sku_customer {
-          customer_created
-          customer_id
-          customer_last_updated
-          customer_name
-          id
-        }
-        sku_description
         sku_id
-        sku_last_updated
         sku_number
-        sku_recommendations {
-          recommendation_active
-          recommendation_created
-          recommendation_id
-          recommendation_last_updated
-          recommendation_recommendation
+        sku_description
+        sku_customer {
+          id
+          customer_id
+          customer_name
+          customer_last_updated
+          customer_created
         }
+        sku_recommendations {
+          recommendation_id
+          recommendation_recommendation
+          recommendation_active
+          recommendation_last_updated
+          recommendation_created
+        }
+        sku_last_updated
+        sku_created
       }
       org_updates {
-        update_active
-        update_brand_id
-        update_brand_name
-        update_created
+        update_id
+        update_sku_number
+        update_sku_id
+        update_sku_description
         update_customer_id
         update_customer_name
-        update_id
-        update_last_updated
-        update_sku_description
-        update_sku_id
-        update_sku_number
+        update_brand_id
+        update_brand_name
         update_update
         update_url
+        update_active
+        update_last_updated
+        update_created
       }
-      updatedAt
-    }
-  }
-`;
-export const updateDefault = /* GraphQL */ `
-  mutation UpdateDefault(
-    $condition: ModelDefaultConditionInput
-    $input: UpdateDefaultInput!
-  ) {
-    updateDefault(condition: $condition, input: $input) {
+      org_insights {
+        insight_id
+        insight_insight
+        insight_active
+        insight_last_updated
+        insight_created
+      }
+      org_params {
+        param_id
+        param_name
+        param_value
+        param_last_updated
+        param_created
+      }
+      org_last_updated
       createdAt
-      default_condition
-      default_created
-      default_high
-      default_id
-      default_last_updated
-      default_low
-      default_message
-      default_value
-      id
       updatedAt
     }
   }
 `;
 export const updateOrg = /* GraphQL */ `
   mutation UpdateOrg(
-    $condition: ModelOrgConditionInput
     $input: UpdateOrgInput!
+    $condition: ModelOrgConditionInput
   ) {
-    updateOrg(condition: $condition, input: $input) {
-      createdAt
+    updateOrg(input: $input, condition: $condition) {
       id
       org_id
-      org_insights {
-        insight_active
-        insight_created
-        insight_id
-        insight_insight
-        insight_last_updated
-      }
-      org_last_updated
       org_name
-      org_params {
-        param_created
-        param_id
-        param_last_updated
-        param_name
-        param_value
-      }
       org_skus {
         id
-        sku_created
-        sku_customer {
-          customer_created
-          customer_id
-          customer_last_updated
-          customer_name
-          id
-        }
-        sku_description
         sku_id
-        sku_last_updated
         sku_number
-        sku_recommendations {
-          recommendation_active
-          recommendation_created
-          recommendation_id
-          recommendation_last_updated
-          recommendation_recommendation
+        sku_description
+        sku_customer {
+          id
+          customer_id
+          customer_name
+          customer_last_updated
+          customer_created
         }
+        sku_recommendations {
+          recommendation_id
+          recommendation_recommendation
+          recommendation_active
+          recommendation_last_updated
+          recommendation_created
+        }
+        sku_last_updated
+        sku_created
       }
       org_updates {
-        update_active
-        update_brand_id
-        update_brand_name
-        update_created
+        update_id
+        update_sku_number
+        update_sku_id
+        update_sku_description
         update_customer_id
         update_customer_name
-        update_id
-        update_last_updated
-        update_sku_description
-        update_sku_id
-        update_sku_number
+        update_brand_id
+        update_brand_name
         update_update
         update_url
+        update_active
+        update_last_updated
+        update_created
       }
+      org_insights {
+        insight_id
+        insight_insight
+        insight_active
+        insight_last_updated
+        insight_created
+      }
+      org_params {
+        param_id
+        param_name
+        param_value
+        param_last_updated
+        param_created
+      }
+      org_last_updated
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteOrg = /* GraphQL */ `
+  mutation DeleteOrg(
+    $input: DeleteOrgInput!
+    $condition: ModelOrgConditionInput
+  ) {
+    deleteOrg(input: $input, condition: $condition) {
+      id
+      org_id
+      org_name
+      org_skus {
+        id
+        sku_id
+        sku_number
+        sku_description
+        sku_customer {
+          id
+          customer_id
+          customer_name
+          customer_last_updated
+          customer_created
+        }
+        sku_recommendations {
+          recommendation_id
+          recommendation_recommendation
+          recommendation_active
+          recommendation_last_updated
+          recommendation_created
+        }
+        sku_last_updated
+        sku_created
+      }
+      org_updates {
+        update_id
+        update_sku_number
+        update_sku_id
+        update_sku_description
+        update_customer_id
+        update_customer_name
+        update_brand_id
+        update_brand_name
+        update_update
+        update_url
+        update_active
+        update_last_updated
+        update_created
+      }
+      org_insights {
+        insight_id
+        insight_insight
+        insight_active
+        insight_last_updated
+        insight_created
+      }
+      org_params {
+        param_id
+        param_name
+        param_value
+        param_last_updated
+        param_created
+      }
+      org_last_updated
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createDefault = /* GraphQL */ `
+  mutation CreateDefault(
+    $input: CreateDefaultInput!
+    $condition: ModelDefaultConditionInput
+  ) {
+    createDefault(input: $input, condition: $condition) {
+      id
+      default_id
+      default_condition
+      default_high
+      default_low
+      default_value
+      default_message
+      default_last_updated
+      default_created
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateDefault = /* GraphQL */ `
+  mutation UpdateDefault(
+    $input: UpdateDefaultInput!
+    $condition: ModelDefaultConditionInput
+  ) {
+    updateDefault(input: $input, condition: $condition) {
+      id
+      default_id
+      default_condition
+      default_high
+      default_low
+      default_value
+      default_message
+      default_last_updated
+      default_created
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteDefault = /* GraphQL */ `
+  mutation DeleteDefault(
+    $input: DeleteDefaultInput!
+    $condition: ModelDefaultConditionInput
+  ) {
+    deleteDefault(input: $input, condition: $condition) {
+      id
+      default_id
+      default_condition
+      default_high
+      default_low
+      default_value
+      default_message
+      default_last_updated
+      default_created
+      createdAt
       updatedAt
     }
   }

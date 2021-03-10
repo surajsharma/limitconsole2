@@ -1,439 +1,103 @@
-schema {
-    query: Query
-    mutation: Mutation
-    subscription: Subscription
-}
-
 type Condition {
-    condition_condition: String
-    condition_created: String
-    condition_high: Float
     condition_id: ID!
-    condition_last_updated: String
+    condition_condition: String
+    condition_high: Float
     condition_low: Float
-    condition_message: String
     condition_value: Float
-}
-
-type Customer {
-    customer_conditions: [Condition]
-    customer_created: String
-    customer_id: String
-    customer_last_updated: String
-    customer_name: String
-    customer_promotions: [Promotion]
-    id: ID!
-}
-
-type Default {
-    createdAt: AWSDateTime!
-    default_condition: String
-    default_created: String
-    default_high: Float
-    default_id: ID!
-    default_last_updated: String
-    default_low: Float
-    default_message: String
-    default_value: Float
-    id: ID!
-    updatedAt: AWSDateTime!
-}
-
-type Insight {
-    insight_active: Boolean
-    insight_created: String
-    insight_id: ID!
-    insight_insight: String
-    insight_last_updated: String
-}
-
-type ModelDefaultConnection {
-    items: [Default]
-    nextToken: String
-}
-
-type ModelOrgConnection {
-    items: [Org]
-    nextToken: String
-}
-
-type Mutation {
-    createDefault(
-        condition: ModelDefaultConditionInput
-        input: CreateDefaultInput!
-    ): Default
-    createOrg(condition: ModelOrgConditionInput, input: CreateOrgInput!): Org
-    deleteDefault(
-        condition: ModelDefaultConditionInput
-        input: DeleteDefaultInput!
-    ): Default
-    deleteOrg(condition: ModelOrgConditionInput, input: DeleteOrgInput!): Org
-    updateDefault(
-        condition: ModelDefaultConditionInput
-        input: UpdateDefaultInput!
-    ): Default
-    updateOrg(condition: ModelOrgConditionInput, input: UpdateOrgInput!): Org
-}
-
-type Org {
-    createdAt: AWSDateTime!
-    id: ID!
-    org_id: String!
-    org_insights: [Insight]
-    org_last_updated: String
-    org_name: String!
-    org_params: [Param]
-    org_skus: [Sku]
-    org_updates: [Update]
-    updatedAt: AWSDateTime!
+    condition_message: String
+    condition_last_updated: String
+    condition_created: String
 }
 
 type Param {
-    param_created: String
     param_id: ID!
-    param_last_updated: String
     param_name: String
     param_value: String
+    param_last_updated: String
+    param_created: String
+}
+
+type Customer {
+    id: ID!
+    customer_id: String
+    customer_name: String
+    customer_conditions: [Condition]
+    customer_promotions: [Promotion]
+    customer_last_updated: String
+    customer_created: String
 }
 
 type Promotion {
-    promotion_created: String
-    promotion_end_date: String
     promotion_id: ID!
-    promotion_last_updated: String
     promotion_promotion: String
     promotion_start_date: String
-}
-
-type Query {
-    getDefault(id: ID!): Default
-    getOrg(id: ID!): Org
-    listDefaults(
-        filter: ModelDefaultFilterInput
-        limit: Int
-        nextToken: String
-    ): ModelDefaultConnection
-    listOrgs(
-        filter: ModelOrgFilterInput
-        limit: Int
-        nextToken: String
-    ): ModelOrgConnection
+    promotion_end_date: String
+    promotion_last_updated: String
+    promotion_created: String
 }
 
 type Recommendation {
-    recommendation_active: Boolean
-    recommendation_created: String
     recommendation_id: ID!
-    recommendation_last_updated: String
     recommendation_recommendation: String
+    recommendation_active: Boolean
+    recommendation_last_updated: String
+    recommendation_created: String
+}
+
+type Update {
+    update_id: ID!
+    update_sku_number: String
+    update_sku_id: ID
+    update_sku_description: String
+    update_customer_id: String
+    update_customer_name: String
+    update_brand_id: String
+    update_brand_name: String
+    update_update: String
+    update_url: String
+    update_active: Boolean
+    update_last_updated: String
+    update_created: String
+}
+
+type Insight {
+    insight_id: ID!
+    insight_insight: String
+    insight_active: Boolean
+    insight_last_updated: String
+    insight_created: String
 }
 
 type Sku {
     id: ID!
-    sku_created: String
+    sku_id: String!
+    sku_number: String
+    sku_description: String
     sku_customer: [Customer]
-    sku_description: String
-    sku_id: String!
-    sku_last_updated: String
-    sku_number: String
     sku_recommendations: [Recommendation]
-}
-
-type Subscription {
-    onCreateDefault: Default @aws_subscribe(mutations: ["createDefault"])
-    onCreateOrg: Org @aws_subscribe(mutations: ["createOrg"])
-    onDeleteDefault: Default @aws_subscribe(mutations: ["deleteDefault"])
-    onDeleteOrg: Org @aws_subscribe(mutations: ["deleteOrg"])
-    onUpdateDefault: Default @aws_subscribe(mutations: ["updateDefault"])
-    onUpdateOrg: Org @aws_subscribe(mutations: ["updateOrg"])
-}
-
-type Update {
-    update_active: Boolean
-    update_brand_id: String
-    update_brand_name: String
-    update_created: String
-    update_customer_id: String
-    update_customer_name: String
-    update_id: ID!
-    update_last_updated: String
-    update_sku_description: String
-    update_sku_id: ID
-    update_sku_number: String
-    update_update: String
-    update_url: String
-}
-
-enum ModelAttributeTypes {
-    _null
-    binary
-    binarySet
-    bool
-    list
-    map
-    number
-    numberSet
-    string
-    stringSet
-}
-
-enum ModelSortDirection {
-    ASC
-    DESC
-}
-
-input ConditionInput {
-    condition_condition: String
-    condition_created: String
-    condition_high: Float
-    condition_id: ID!
-    condition_last_updated: String
-    condition_low: Float
-    condition_message: String
-    condition_value: Float
-}
-
-input CreateDefaultInput {
-    default_condition: String
-    default_created: String
-    default_high: Float
-    default_id: ID!
-    default_last_updated: String
-    default_low: Float
-    default_message: String
-    default_value: Float
-    id: ID
-}
-
-input CreateOrgInput {
-    id: ID
-    org_id: String!
-    org_insights: [InsightInput]
-    org_last_updated: String
-    org_name: String!
-    org_params: [ParamInput]
-    org_skus: [SkuInput]
-    org_updates: [UpdateInput]
-}
-
-input CustomerInput {
-    customer_conditions: [ConditionInput]
-    customer_created: String
-    customer_id: String
-    customer_last_updated: String
-    customer_name: String
-    customer_promotions: [PromotionInput]
-    id: ID!
-}
-
-input DeleteDefaultInput {
-    id: ID
-}
-
-input DeleteOrgInput {
-    id: ID
-}
-
-input InsightInput {
-    insight_active: Boolean
-    insight_created: String
-    insight_id: ID!
-    insight_insight: String
-    insight_last_updated: String
-}
-
-input ModelBooleanInput {
-    attributeExists: Boolean
-    attributeType: ModelAttributeTypes
-    eq: Boolean
-    ne: Boolean
-}
-
-input ModelDefaultConditionInput {
-    and: [ModelDefaultConditionInput]
-    default_condition: ModelStringInput
-    default_created: ModelStringInput
-    default_high: ModelFloatInput
-    default_id: ModelIDInput
-    default_last_updated: ModelStringInput
-    default_low: ModelFloatInput
-    default_message: ModelStringInput
-    default_value: ModelFloatInput
-    not: ModelDefaultConditionInput
-    or: [ModelDefaultConditionInput]
-}
-
-input ModelDefaultFilterInput {
-    and: [ModelDefaultFilterInput]
-    default_condition: ModelStringInput
-    default_created: ModelStringInput
-    default_high: ModelFloatInput
-    default_id: ModelIDInput
-    default_last_updated: ModelStringInput
-    default_low: ModelFloatInput
-    default_message: ModelStringInput
-    default_value: ModelFloatInput
-    id: ModelIDInput
-    not: ModelDefaultFilterInput
-    or: [ModelDefaultFilterInput]
-}
-
-input ModelFloatInput {
-    attributeExists: Boolean
-    attributeType: ModelAttributeTypes
-    between: [Float]
-    eq: Float
-    ge: Float
-    gt: Float
-    le: Float
-    lt: Float
-    ne: Float
-}
-
-input ModelIDInput {
-    attributeExists: Boolean
-    attributeType: ModelAttributeTypes
-    beginsWith: ID
-    between: [ID]
-    contains: ID
-    eq: ID
-    ge: ID
-    gt: ID
-    le: ID
-    lt: ID
-    ne: ID
-    notContains: ID
-    size: ModelSizeInput
-}
-
-input ModelIntInput {
-    attributeExists: Boolean
-    attributeType: ModelAttributeTypes
-    between: [Int]
-    eq: Int
-    ge: Int
-    gt: Int
-    le: Int
-    lt: Int
-    ne: Int
-}
-
-input ModelOrgConditionInput {
-    and: [ModelOrgConditionInput]
-    not: ModelOrgConditionInput
-    or: [ModelOrgConditionInput]
-    org_id: ModelStringInput
-    org_last_updated: ModelStringInput
-    org_name: ModelStringInput
-}
-
-input ModelOrgFilterInput {
-    and: [ModelOrgFilterInput]
-    id: ModelIDInput
-    not: ModelOrgFilterInput
-    or: [ModelOrgFilterInput]
-    org_id: ModelStringInput
-    org_last_updated: ModelStringInput
-    org_name: ModelStringInput
-}
-
-input ModelSizeInput {
-    between: [Int]
-    eq: Int
-    ge: Int
-    gt: Int
-    le: Int
-    lt: Int
-    ne: Int
-}
-
-input ModelStringInput {
-    attributeExists: Boolean
-    attributeType: ModelAttributeTypes
-    beginsWith: String
-    between: [String]
-    contains: String
-    eq: String
-    ge: String
-    gt: String
-    le: String
-    lt: String
-    ne: String
-    notContains: String
-    size: ModelSizeInput
-}
-
-input ParamInput {
-    param_created: String
-    param_id: ID!
-    param_last_updated: String
-    param_name: String
-    param_value: String
-}
-
-input PromotionInput {
-    promotion_created: String
-    promotion_end_date: String
-    promotion_id: ID!
-    promotion_last_updated: String
-    promotion_promotion: String
-    promotion_start_date: String
-}
-
-input RecommendationInput {
-    recommendation_active: Boolean
-    recommendation_created: String
-    recommendation_id: ID!
-    recommendation_last_updated: String
-    recommendation_recommendation: String
-}
-
-input SkuInput {
-    id: ID!
-    sku_created: String
-    sku_customer: [CustomerInput]
-    sku_description: String
-    sku_id: String!
     sku_last_updated: String
-    sku_number: String
-    sku_recommendations: [RecommendationInput]
+    sku_created: String
 }
 
-input UpdateDefaultInput {
-    default_condition: String
-    default_created: String
-    default_high: Float
-    default_id: ID
-    default_last_updated: String
-    default_low: Float
-    default_message: String
-    default_value: Float
+type Org @model {
     id: ID!
-}
-
-input UpdateInput {
-    update_active: Boolean
-    update_brand_id: String
-    update_brand_name: String
-    update_created: String
-    update_customer_id: String
-    update_customer_name: String
-    update_id: ID!
-    update_last_updated: String
-    update_sku_description: String
-    update_sku_id: ID
-    update_sku_number: String
-    update_update: String
-    update_url: String
-}
-
-input UpdateOrgInput {
-    id: ID!
-    org_id: String
-    org_insights: [InsightInput]
+    org_id: String!
+    org_name: String!
+    org_skus: [Sku]
+    org_updates: [Update]
+    org_insights: [Insight]
+    org_params: [Param]
     org_last_updated: String
-    org_name: String
-    org_params: [ParamInput]
-    org_skus: [SkuInput]
-    org_updates: [UpdateInput]
+}
+
+type Default @model {
+    id: ID!
+    default_id: ID!
+    default_condition: String
+    default_high: Float
+    default_low: Float
+    default_value: Float
+    default_message: String
+    default_last_updated: String
+    default_created: String
 }

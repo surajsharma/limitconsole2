@@ -36,8 +36,8 @@ import {
     delPromotion,
 } from "../../actions/orgActions";
 
-import AddConditionModal from "./Modals/AddConditionModal";
-import EditConditionModal from "./Modals/EditConditionModal";
+import AddDefaultConditionModal from "./Modals/AddDefaultConditionModal";
+import EditDefaultConditionModal from "./Modals/EditDefaultConditionModal";
 import { onUpdateOrg } from "../../graphql/subscriptions";
 
 function Defaults(props) {
@@ -129,7 +129,7 @@ function Defaults(props) {
                 <Td>{c.condition_value}</Td>
                 <Td>{c.condition_message}</Td>
                 <Td>{c.condition_last_updated.split("T")[0]}</Td>
-                <EditConditionModal
+                <EditDefaultConditionModal
                     editCondition={EditCondition}
                     deleteCondition={DeleteCondition}
                     condition={c}
@@ -183,8 +183,8 @@ function Defaults(props) {
             ) : (
                 <Center>
                     <Text fontSize="sm" m="20px">
-                        No defaults exist for {loadedCustomer.customer_name},
-                        please create one by clicking on 'Add'.
+                        No defaults exist, please create one by clicking on
+                        'Add'.
                     </Text>
                 </Center>
             )}

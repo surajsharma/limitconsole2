@@ -16,7 +16,7 @@ import ButtonF from "../../Common/ButtonF";
 import ButtonU from "../../Common/ButtonU";
 import Input from "../../Common/Input";
 
-function AddConditionModal(props) {
+function AddDefaultConditionModal(props) {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     const { AddCondition } = props;
@@ -108,4 +108,4 @@ function AddConditionModal(props) {
     );
 }
 
-export default AddConditionModal;
+export default AddDefaultConditionModal;

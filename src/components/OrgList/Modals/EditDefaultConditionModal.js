@@ -17,7 +17,11 @@ import ButtonF from "../../Common/ButtonF";
 import ButtonU from "../../Common/ButtonU";
 import Input from "../../Common/Input";
 
-function EditConditionModal({ editCondition, deleteCondition, condition }) {
+function EditDefaultConditionModal({
+    editCondition,
+    deleteCondition,
+    condition,
+}) {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const initialRef = useRef();
 
@@ -128,4 +132,4 @@ function EditConditionModal({ editCondition, deleteCondition, condition }) {
     );
 }
 
-export default EditConditionModal;
+export default EditDefaultConditionModal;
