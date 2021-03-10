@@ -48,6 +48,7 @@ import {
 } from "../actions/types";
 
 const initialState = {
+    defaults: [],
     orgs: [],
     org: {},
     loadedCustomer: {},
@@ -76,6 +77,7 @@ const rootReducer = (state = initialState, action) => {
                 loading: false,
                 loadedOrg: action.org,
             };
+
         case NEW_ORG:
             return { ...state, org: action.org };
         case NEW_ORG_ERR:
@@ -203,6 +205,7 @@ const rootReducer = (state = initialState, action) => {
                 loading: false,
                 loadedOrg: action.org,
             };
+
         default:
             return state;
     }
