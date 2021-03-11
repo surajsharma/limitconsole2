@@ -27,6 +27,8 @@ function AddDefaultConditionModal(props) {
     const [value, setValue] = useState("");
     const [message, setMessage] = useState("");
 
+    const [order, setOrder] = useState("");
+
     const initialRef = useRef();
     return (
         <>
@@ -79,6 +81,14 @@ function AddDefaultConditionModal(props) {
                         <FormControl mt={4}>
                             <Input
                                 value={message}
+                                placeholder="Order"
+                                onChange={(e) => setOrder(e.target.value)}
+                            />
+                        </FormControl>
+                        &nbsp;
+                        <FormControl mt={4}>
+                            <Input
+                                value={message}
                                 placeholder="Message"
                                 onChange={(e) => setMessage(e.target.value)}
                             />
@@ -95,6 +105,7 @@ function AddDefaultConditionModal(props) {
                                     condition_low: lowValue,
                                     condition_value: value,
                                     condition_message: message,
+                                    condition_order: order,
                                 });
                                 onClose();
                             }}

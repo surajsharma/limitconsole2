@@ -66,6 +66,7 @@ export const addDefault = (c) => {
             default_low: c.condition_low,
             default_value: c.condition_value,
             default_message: c.condition_message,
+            default_order: c.condition_order,
             default_last_updated: new Date().toISOString(),
             default_created: new Date().toISOString(),
             default_id: uuidv4(),
@@ -117,10 +118,6 @@ export const editDefault = (c) => {
 
 export const delDefault = (c) => {
     return async (dispatch) => {
-        console.log(
-            "🚀 ~ file: defaultsActions.js ~ line 136 ~ delDefault ~ c",
-            c
-        );
         dispatch({ type: IS_LOADING_DEFAULTS });
         try {
             const data = await API.graphql({

@@ -97,6 +97,7 @@ type Default @model {
     default_high: Float
     default_low: Float
     default_value: Float
+    default_order: String
     default_message: String
     default_last_updated: String
     default_created: String

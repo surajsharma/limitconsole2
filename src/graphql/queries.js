@@ -129,6 +129,7 @@ export const getDefault = /* GraphQL */ `
       default_high
       default_low
       default_value
+      default_order
       default_message
       default_last_updated
       default_created
@@ -151,6 +152,7 @@ export const listDefaults = /* GraphQL */ `
         default_high
         default_low
         default_value
+        default_order
         default_message
         default_last_updated
         default_created

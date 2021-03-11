@@ -86,6 +86,7 @@ function Defaults(props) {
                 <Td>{c.default_high}</Td>
                 <Td>{c.default_low}</Td>
                 <Td>{c.default_value}</Td>
+                <Td>{c.default_order}</Td>
                 <Td>{c.default_message}</Td>
                 <Td>{c.default_last_updated.split("T")[0]}</Td>
 
@@ -107,6 +108,7 @@ function Defaults(props) {
                         <Th>High</Th>
                         <Th>Low</Th>
                         <Th>Value</Th>
+                        <Th>Order</Th>
                         <Th>Message</Th>
                         <Th>Updated</Th>
                         <Th></Th>

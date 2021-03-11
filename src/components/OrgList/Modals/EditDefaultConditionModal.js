@@ -30,6 +30,7 @@ function EditDefaultConditionModal({
     const [lowValue, setLowValue] = useState(condition.default_low);
     const [value, setValue] = useState(condition.default_value);
     const [message, setMessage] = useState(condition.default_message);
+    const [order, setOrder] = useState(condition.default_message);
 
     return (
         <>
@@ -88,6 +89,14 @@ function EditDefaultConditionModal({
                             &nbsp;
                             <FormControl mt={4}>
                                 <Input
+                                    value={value}
+                                    placeholder="Order"
+                                    onChange={(e) => setOrder(e.target.value)}
+                                />
+                            </FormControl>
+                            &nbsp;
+                            <FormControl mt={4}>
+                                <Input
                                     value={message}
                                     placeholder="Message"
                                     onChange={(e) => setMessage(e.target.value)}
@@ -116,6 +125,7 @@ function EditDefaultConditionModal({
                                             default_low: lowValue,
                                             default_value: value,
                                             default_message: message,
+                                            default_order: order,
                                         },
                                         condition
                                     );

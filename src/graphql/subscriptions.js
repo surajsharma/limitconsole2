@@ -199,6 +199,7 @@ export const onCreateDefault = /* GraphQL */ `
       default_high
       default_low
       default_value
+      default_order
       default_message
       default_last_updated
       default_created
@@ -216,6 +217,7 @@ export const onUpdateDefault = /* GraphQL */ `
       default_high
       default_low
       default_value
+      default_order
       default_message
       default_last_updated
       default_created
@@ -233,6 +235,7 @@ export const onDeleteDefault = /* GraphQL */ `
       default_high
       default_low
       default_value
+      default_order
       default_message
       default_last_updated
       default_created
