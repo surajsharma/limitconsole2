@@ -770,6 +770,7 @@ export const addCondition = (c, customer, sku, org) => {
             condition_high: c.condition_high,
             condition_low: c.condition_low,
             condition_value: c.condition_value,
+            condition_order: c.condition_order,
             condition_message: c.condition_message,
             condition_last_updated: new Date().toISOString(),
             condition_created: new Date().toISOString(),

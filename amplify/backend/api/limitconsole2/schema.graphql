@@ -5,6 +5,7 @@ type Condition {
     condition_low: Float
     condition_value: Float
     condition_message: String
+    condition_order: String
     condition_last_updated: String
     condition_created: String
 }

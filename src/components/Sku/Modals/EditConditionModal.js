@@ -27,6 +27,7 @@ function EditConditionModal({ editCondition, deleteCondition, condition }) {
     const [lowValue, setLowValue] = useState(condition.condition_low);
     const [value, setValue] = useState(condition.condition_value);
     const [message, setMessage] = useState(condition.condition_message);
+    const [order, setOrder] = useState(condition.condition_order);
 
     return (
         <>
@@ -83,6 +84,22 @@ function EditConditionModal({ editCondition, deleteCondition, condition }) {
                                 />
                             </FormControl>
                             &nbsp;
+                            <FormControl mt={4}>
+                                <Input
+                                    value={order}
+                                    placeholder="Order"
+                                    onChange={(e) => setOrder(e.target.value)}
+                                />
+                            </FormControl>
+                            &nbsp{" "}
+                            <FormControl mt={4}>
+                                <Input
+                                    value={value}
+                                    placeholder="Value"
+                                    onChange={(e) => setValue(e.target.value)}
+                                />
+                            </FormControl>
+                            &nbsp{" "}
                             <FormControl mt={4}>
                                 <TextArea
                                     value={message}
