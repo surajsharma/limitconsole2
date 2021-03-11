@@ -89,7 +89,7 @@ function EditDefaultConditionModal({
                             &nbsp;
                             <FormControl mt={4}>
                                 <Input
-                                    value={value}
+                                    value={order}
                                     placeholder="Order"
                                     onChange={(e) => setOrder(e.target.value)}
                                 />
