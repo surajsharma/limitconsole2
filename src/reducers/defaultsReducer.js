@@ -38,7 +38,7 @@ const defaultsReducer = (state = initialState, action) => {
         case EDIT_DEFAULT_ERR:
             return { ...state, error: action.error };
         case DELETE_DEFAULT:
-            return { ...state, defaults: action.defaults };
+            return { ...state, defaults: action.defaults, loading: false };
         case DELETE_DEFAULT_ERR:
             return { ...state, error: action.error };
         case IS_LOADING_DEFAULTS:

@@ -115,8 +115,25 @@ export const editDefault = (c) => {
     };
 };
 
-export const delDefault = (c, defaults) => {
+export const delDefault = (c) => {
     return async (dispatch) => {
+        console.log(
+            "🚀 ~ file: defaultsActions.js ~ line 136 ~ delDefault ~ c",
+            c
+        );
         dispatch({ type: IS_LOADING_DEFAULTS });
+        try {
+            const data = await API.graphql({
+                query: deleteDefault,
+                variables: { input: { id: c.id } },
+            });
+
+            dispatch({
+                type: DELETE_DEFAULT,
+                default: data.data.updateDefault,
+            });
+        } catch (err) {
+            dispatch({ type: DELETE_DEFAULT_ERR, error: err });
+        }
     };
 };

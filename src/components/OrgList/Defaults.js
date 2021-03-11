@@ -30,7 +30,7 @@ import {
 } from "../../graphql/subscriptions";
 
 function Defaults(props) {
-    const { fetchDefaults, defaults, loading, editDefault } = props;
+    const { fetchDefaults, defaults, loading, editDefault, delDefault } = props;
 
     useEffect(() => {
         fetchDefaults();
@@ -69,7 +69,7 @@ function Defaults(props) {
     };
 
     const DeleteDefault = (orgObject) => {
-        return delDefault(orgObject, defaults);
+        return delDefault(orgObject);
     };
 
     const DefaultsRow = ({ c }) => {
@@ -88,6 +88,7 @@ function Defaults(props) {
                 <Td>{c.default_value}</Td>
                 <Td>{c.default_message}</Td>
                 <Td>{c.default_last_updated.split("T")[0]}</Td>
+
                 <EditDefaultConditionModal
                     editCondition={EditDefault}
                     deleteCondition={DeleteDefault}
