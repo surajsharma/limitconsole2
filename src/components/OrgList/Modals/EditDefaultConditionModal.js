@@ -25,11 +25,11 @@ function EditDefaultConditionModal({
     const { isOpen, onOpen, onClose } = useDisclosure();
     const initialRef = useRef();
 
-    const [_condition, setCondition] = useState(condition.condition_condition);
-    const [highValue, setHighValue] = useState(condition.condition_high);
-    const [lowValue, setLowValue] = useState(condition.condition_low);
-    const [value, setValue] = useState(condition.condition_value);
-    const [message, setMessage] = useState(condition.condition_message);
+    const [_condition, setCondition] = useState(condition.default_condition);
+    const [highValue, setHighValue] = useState(condition.default_high);
+    const [lowValue, setLowValue] = useState(condition.default_low);
+    const [value, setValue] = useState(condition.default_value);
+    const [message, setMessage] = useState(condition.default_message);
 
     return (
         <>
@@ -111,11 +111,11 @@ function EditDefaultConditionModal({
                                 onClick={() => {
                                     editCondition(
                                         {
-                                            condition_condition: _condition,
-                                            condition_high: highValue,
-                                            condition_low: lowValue,
-                                            condition_value: value,
-                                            condition_message: message,
+                                            default_condition: _condition,
+                                            default_high: highValue,
+                                            default_low: lowValue,
+                                            default_value: value,
+                                            default_message: message,
                                         },
                                         condition
                                     );

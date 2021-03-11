@@ -1,12 +1,8 @@
-import React, { useEffect, useState } from "react";
-
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { useLocation } from "react-router-dom";
-
 import { API } from "aws-amplify";
 
 import {
-    Flex,
     CircularProgress,
     Center,
     Table,
@@ -18,8 +14,15 @@ import {
     Tbody,
 } from "@chakra-ui/react";
 
-import { fetchDefault, fetchDefaults } from "../../actions/defaultsActions";
+import {
+    fetchDefault,
+    fetchDefaults,
+    editDefault,
+    delDefault,
+} from "../../actions/defaultsActions";
+
 import EditDefaultConditionModal from "./Modals/EditDefaultConditionModal";
+
 import {
     onUpdateDefault,
     onCreateDefault,
@@ -27,17 +30,10 @@ import {
 } from "../../graphql/subscriptions";
 
 function Defaults(props) {
-    // let location = useLocation();
-
-    const { fetchDefault, fetchDefaults, defaults, loading, error } = props;
-
-    // const org_id = location.pathname.split("/")[2];
-    // const sku_id = location.pathname.split("/")[3];
-    // const cus_id = location.pathname.split("/")[4];
+    const { fetchDefaults, defaults, loading, editDefault } = props;
 
     useEffect(() => {
         fetchDefaults();
-
         const subscriptionCreate = API.graphql({
             query: onCreateDefault,
         }).subscribe({
@@ -68,17 +64,12 @@ function Defaults(props) {
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     const EditDefault = (orgObject, condition) => {
-        // return editCondition(
-        //     orgObject,
-        //     condition,
-        //     loadedCustomer,
-        //     loadedSku,
-        //     loadedOrg
-        // );
+        const c = { ...condition, ...orgObject };
+        return editDefault(c);
     };
 
     const DeleteDefault = (orgObject) => {
-        // return delCondition(orgObject, loadedCustomer, loadedSku, loadedOrg);
+        return delDefault(orgObject, defaults);
     };
 
     const DefaultsRow = ({ c }) => {
@@ -152,6 +143,9 @@ const mapStateToProps = (state) => ({
     error: state.defaults.error,
 });
 
-export default connect(mapStateToProps, { fetchDefault, fetchDefaults })(
-    Defaults
-);
+export default connect(mapStateToProps, {
+    fetchDefault,
+    fetchDefaults,
+    editDefault,
+    delDefault,
+})(Defaults);

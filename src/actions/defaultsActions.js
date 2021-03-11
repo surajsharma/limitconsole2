@@ -1,10 +1,10 @@
 import {
     ADD_DEFAULT,
-    // EDIT_DEFAULT,
-    // DELETE_DEFAULT,
+    EDIT_DEFAULT,
+    DELETE_DEFAULT,
     ADD_DEFAULT_ERR,
-    // EDIT_DEFAULT_ERR,
-    // DELETE_DEFAULT_ERR,
+    EDIT_DEFAULT_ERR,
+    DELETE_DEFAULT_ERR,
     FETCH_DEFAULT,
     FETCH_DEFAULT_ERR,
     IS_LOADING_DEFAULTS,
@@ -56,7 +56,7 @@ export const fetchDefaults = (dispatch) => {
     };
 };
 
-export const addDefault = (c, defaults) => {
+export const addDefault = (c) => {
     return async (dispatch) => {
         dispatch({ type: IS_LOADING_DEFAULTS });
 
@@ -71,10 +71,6 @@ export const addDefault = (c, defaults) => {
             default_id: uuidv4(),
         };
 
-        let newDefaults = defaults;
-
-        newDefaults.push(condition);
-
         try {
             const data = await API.graphql({
                 query: createDefault,
@@ -83,10 +79,44 @@ export const addDefault = (c, defaults) => {
 
             dispatch({
                 type: ADD_DEFAULT,
-                org: data.data.createDefault,
+                default: data.data.createDefault,
             });
         } catch (err) {
             dispatch({ type: ADD_DEFAULT_ERR, error: err });
         }
+    };
+};
+
+export const editDefault = (c) => {
+    return async (dispatch) => {
+        dispatch({ type: IS_LOADING_DEFAULTS });
+
+        const condition = {
+            ...c,
+            default_last_updated: new Date().toISOString(),
+        };
+
+        delete condition.createdAt;
+        delete condition.updatedAt;
+
+        try {
+            const data = await API.graphql({
+                query: updateDefault,
+                variables: { input: condition },
+            });
+
+            dispatch({
+                type: EDIT_DEFAULT,
+                default: data.data.updateDefault,
+            });
+        } catch (err) {
+            dispatch({ type: EDIT_DEFAULT_ERR, error: err });
+        }
+    };
+};
+
+export const delDefault = (c, defaults) => {
+    return async (dispatch) => {
+        dispatch({ type: IS_LOADING_DEFAULTS });
     };
 };
