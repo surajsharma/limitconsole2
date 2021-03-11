@@ -98,24 +98,6 @@ export const listOrgs = /* GraphQL */ `
                     sku_id
                     sku_number
                     sku_description
-                    customer_conditions {
-                        condition_id
-                        condition_condition
-                        condition_high
-                        condition_low
-                        condition_value
-                        condition_message
-                        condition_last_updated
-                        condition_created
-                    }
-                    customer_promotions {
-                        promotion_id
-                        promotion_promotion
-                        promotion_start_date
-                        promotion_end_date
-                        promotion_last_updated
-                        promotion_created
-                    }
                     sku_last_updated
                     sku_created
                 }
