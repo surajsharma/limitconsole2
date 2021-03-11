@@ -15,6 +15,7 @@ import {
 import ButtonF from "../../Common/ButtonF";
 import ButtonU from "../../Common/ButtonU";
 import Input from "../../Common/Input";
+import TextArea from "../../Common/TextArea";
 
 function AddDefaultConditionModal(props) {
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -87,7 +88,7 @@ function AddDefaultConditionModal(props) {
                         </FormControl>
                         &nbsp;
                         <FormControl mt={4}>
-                            <Input
+                            <TextArea
                                 value={message}
                                 placeholder="Message"
                                 onChange={(e) => setMessage(e.target.value)}

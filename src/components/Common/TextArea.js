@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-const Input = styled.input`
+const TextArea = styled.textarea`
     border: 1px solid #c7c7c7;
-    height: 38px;
+    height: 84px;
     width: 250px;
     padding: 10px;
     border-radius: 5px;
@@ -12,4 +12,4 @@ const Input = styled.input`
     background-color: #fff;
 `;
 
-export default Input;
+export default TextArea;

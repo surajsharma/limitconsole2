@@ -16,6 +16,7 @@ import {
 import ButtonF from "../../Common/ButtonF";
 import ButtonU from "../../Common/ButtonU";
 import Input from "../../Common/Input";
+import TextArea from "../../Common/TextArea";
 
 function EditConditionModal({ editCondition, deleteCondition, condition }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -83,7 +84,7 @@ function EditConditionModal({ editCondition, deleteCondition, condition }) {
                             </FormControl>
                             &nbsp;
                             <FormControl mt={4}>
-                                <Input
+                                <TextArea
                                     value={message}
                                     placeholder="Message"
                                     onChange={(e) => setMessage(e.target.value)}
