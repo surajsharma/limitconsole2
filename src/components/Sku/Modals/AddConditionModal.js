@@ -105,6 +105,7 @@ function AddConditionModal(props) {
                                     condition_low: lowValue,
                                     condition_value: value,
                                     condition_message: message,
+                                    condition_order: order,
                                 });
                                 onClose();
                             }}

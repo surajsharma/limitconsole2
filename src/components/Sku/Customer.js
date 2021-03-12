@@ -223,8 +223,8 @@ function Customers(props) {
                 <Td>{c.condition_high}</Td>
                 <Td>{c.condition_low}</Td>
                 <Td>{c.condition_value}</Td>
-                <Td>{c.condition_message}</Td>
                 <Td>{c.condition_order}</Td>
+                <Td>{c.condition_message}</Td>
                 <Td>{c.condition_last_updated.split("T")[0]}</Td>
                 <EditConditionModal
                     editCondition={EditCondition}
@@ -244,8 +244,8 @@ function Customers(props) {
                         <Th>High</Th>
                         <Th>Low</Th>
                         <Th>Value</Th>
-                        <Th>Message</Th>
                         <Th>Order</Th>
+                        <Th>Message</Th>
                         <Th>Updated</Th>
                         <Th></Th>
                     </Tr>

@@ -22,6 +22,7 @@ export const getOrg = /* GraphQL */ `
                         condition_high
                         condition_low
                         condition_value
+                        condition_order
                         condition_message
                         condition_last_updated
                         condition_created
