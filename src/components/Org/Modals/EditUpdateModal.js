@@ -14,6 +14,7 @@ import {
     VStack,
     Td,
     Spacer,
+    Text,
 } from "@chakra-ui/react";
 
 import ButtonF from "../../Common/ButtonF";
@@ -132,6 +133,14 @@ function EditUpdateModal({ update, deleteUpdate, updateUpdate }) {
                                     />
                                 </HStack>
                             </FormControl>
+                            <br />
+                            <Text fontSize="sm">
+                                Created: {update.update_created.split("T")[0]}
+                            </Text>
+                            <Text fontSize="sm">
+                                Updated:{" "}
+                                {update.update_last_updated.split("T")[0]}
+                            </Text>
                         </ModalBody>
                         <ModalFooter>
                             <hr />
