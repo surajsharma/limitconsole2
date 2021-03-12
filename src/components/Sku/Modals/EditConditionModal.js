@@ -11,6 +11,7 @@ import {
     useDisclosure,
     FormControl,
     Spacer,
+    Text,
 } from "@chakra-ui/react";
 
 import ButtonF from "../../Common/ButtonF";
@@ -107,6 +108,15 @@ function EditConditionModal({ editCondition, deleteCondition, condition }) {
                                     onChange={(e) => setMessage(e.target.value)}
                                 />
                             </FormControl>
+                            <br />
+                            <Text fontSize="sm">
+                                Created:{" "}
+                                {condition.condition_created.split("T")[0]}
+                            </Text>
+                            <Text fontSize="sm">
+                                Updated:{" "}
+                                {condition.condition_last_updated.split("T")[0]}
+                            </Text>
                         </ModalBody>
                         <ModalFooter>
                             <hr />

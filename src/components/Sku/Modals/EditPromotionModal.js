@@ -11,6 +11,7 @@ import {
     useDisclosure,
     FormControl,
     Spacer,
+    Text,
 } from "@chakra-ui/react";
 
 import ButtonF from "../../Common/ButtonF";
@@ -70,6 +71,15 @@ function EditPromotionModal({ editPromotion, deletePromotion, promotion }) {
                                 />
                             </FormControl>
                             &nbsp;
+                            <br />
+                            <Text fontSize="sm">
+                                Created:{" "}
+                                {promotion.promotion_created.split("T")[0]}
+                            </Text>
+                            <Text fontSize="sm">
+                                Updated:{" "}
+                                {promotion.promotion_last_updated.split("T")[0]}
+                            </Text>
                         </ModalBody>
                         <ModalFooter>
                             <hr />

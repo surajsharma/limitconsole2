@@ -55,7 +55,7 @@ function EditUpdateModal({ update, deleteUpdate, updateUpdate }) {
                         <ModalCloseButton />
                         <ModalBody pb={6}>
                             <FormControl>
-                                <HStack spacing="150px" align="-moz-initial">
+                                <HStack spacing="100px" align="-moz-initial">
                                     <VStack spacing="10px">
                                         <Input
                                             value={updateName}
