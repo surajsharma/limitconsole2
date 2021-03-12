@@ -91,7 +91,7 @@ function EditConditionModal({ editCondition, deleteCondition, condition }) {
                                     onChange={(e) => setOrder(e.target.value)}
                                 />
                             </FormControl>
-                            &nbsp{" "}
+                            &nbsp;
                             <FormControl mt={4}>
                                 <Input
                                     value={value}
@@ -99,7 +99,7 @@ function EditConditionModal({ editCondition, deleteCondition, condition }) {
                                     onChange={(e) => setValue(e.target.value)}
                                 />
                             </FormControl>
-                            &nbsp{" "}
+                            &nbsp;
                             <FormControl mt={4}>
                                 <TextArea
                                     value={message}

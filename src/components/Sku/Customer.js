@@ -77,7 +77,7 @@ function Customers(props) {
                 (i) => i.sku_id === sku_id
             );
             // customer
-            // fetchAnSku(sku_index, loadedOrg);
+            fetchAnSku(sku_index, loadedOrg);
             fetchCustomer(sku_index, cus_id, loadedOrg);
         } else {
             history.push("/");
@@ -87,7 +87,7 @@ function Customers(props) {
             query: onUpdateOrg,
         }).subscribe({
             next: (orgData) => {
-                // fetchOrg(org_id);
+                fetchOrg(org_id);
                 if (loadedOrg.id) {
                     const sku_index = loadedOrg.org_skus.findIndex(
                         (i) => i.sku_id === sku_id
