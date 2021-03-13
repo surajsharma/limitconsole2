@@ -32,10 +32,12 @@ function EditUpdateModal({ update, deleteUpdate, updateUpdate }) {
     const [skuId, setSkuId] = useState(update.update_sku_number);
     const [skuNumber, setSkuNumber] = useState(update.update_sku_number);
     const [skuDesc, setSkuDesc] = useState(update.update_sku_description);
+
     const [customerId, setCustomerId] = useState(update.update_customer_id);
     const [customerName, setCustomerName] = useState(
         update.update_customer_name
     );
+
     const [brandId, setBrandId] = useState(update.update_brand_id);
     const [brandName, setBrandName] = useState(update.update_brand_name);
 

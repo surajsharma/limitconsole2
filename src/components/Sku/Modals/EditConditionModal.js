@@ -94,14 +94,6 @@ function EditConditionModal({ editCondition, deleteCondition, condition }) {
                             </FormControl>
                             &nbsp;
                             <FormControl mt={4}>
-                                <Input
-                                    value={value}
-                                    placeholder="Value"
-                                    onChange={(e) => setValue(e.target.value)}
-                                />
-                            </FormControl>
-                            &nbsp;
-                            <FormControl mt={4}>
                                 <TextArea
                                     value={message}
                                     placeholder="Message"
