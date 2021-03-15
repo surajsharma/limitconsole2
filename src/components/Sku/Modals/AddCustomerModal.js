@@ -70,6 +70,8 @@ function AddCustomerModal(props) {
                                     customer_conditions: [],
                                     customer_promotions: [],
                                 });
+                                setCustomerId("");
+                                setCustomerName("");
                                 onClose();
                             }}
                         >

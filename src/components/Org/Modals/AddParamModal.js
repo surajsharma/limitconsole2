@@ -66,6 +66,8 @@ function AddParamModal(props) {
                                     param_value: paramValue,
                                     param_name: paramName,
                                 });
+                                setParamName();
+                                setParamValue();
                                 onClose();
                             }}
                         >

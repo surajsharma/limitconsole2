@@ -69,6 +69,8 @@ function AddInsightModal(props) {
                                     insight_insight: insight,
                                     insight_active: insightActive,
                                 });
+                                setInsight("");
+                                setInsightActive("");
                                 onClose();
                             }}
                         >

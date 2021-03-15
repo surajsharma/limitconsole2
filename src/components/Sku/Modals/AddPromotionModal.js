@@ -85,6 +85,9 @@ function AddPromotionModal(props) {
                                     promotion_start_date: startDate,
                                     promotion_end_date: endDate,
                                 });
+                                setPromotion("");
+                                setStartDate(new Date());
+                                setEndDate(new Date());
                                 onClose();
                             }}
                         >

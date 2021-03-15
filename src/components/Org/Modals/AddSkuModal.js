@@ -73,6 +73,9 @@ function AddSkuModal(props) {
                                     sku_description: skuDesc,
                                     sku_org_id: org.id,
                                 });
+                                setSkuId("");
+                                setSkuNumber("");
+                                setSkuDesc("");
                                 onClose();
                             }}
                         >

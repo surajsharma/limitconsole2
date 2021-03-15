@@ -51,7 +51,7 @@ function AddUpdateModal(props) {
                     <ModalCloseButton />
                     <ModalBody pb={6}>
                         <FormControl>
-                            <HStack spacing="150px" align="-moz-initial">
+                            <HStack spacing="100px" align="-moz-initial">
                                 <VStack spacing="10px">
                                     <Input
                                         value={update}
@@ -144,6 +144,16 @@ function AddUpdateModal(props) {
                                     update_url: url,
                                     update_active: updateActive,
                                 });
+                                setUpdate("");
+                                setBrandName("");
+                                setBrandId("");
+                                setCustomerName("");
+                                setCustomerId("");
+                                setSkuDesc("");
+                                setSkuNumber("");
+                                setSkuId("");
+                                setUrl("");
+                                setUpdateActive(false);
                                 onClose();
                             }}
                         >

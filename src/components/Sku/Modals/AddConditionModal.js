@@ -110,6 +110,13 @@ function AddConditionModal(props) {
                                     condition_message: message,
                                     condition_order: order,
                                 });
+
+                                setCondition("");
+                                setHighValue("");
+                                setLowValue("");
+                                setValue("");
+                                setMessage("");
+                                setOrder("");
                                 onClose();
                             }}
                         >

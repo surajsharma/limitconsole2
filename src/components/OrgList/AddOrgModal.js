@@ -64,6 +64,8 @@ function AddOrgModal(props) {
                                     org_id: orgID,
                                     org_name: orgName,
                                 });
+                                setOrgID("");
+                                setOrgName("");
                                 onClose();
                             }}
                         >
