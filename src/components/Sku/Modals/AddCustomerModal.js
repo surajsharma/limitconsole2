@@ -40,7 +40,7 @@ function AddCustomerModal(props) {
                     <br />
                     <ModalCloseButton />
                     <ModalBody pb={6}>
-                        <FormControl>
+                        <FormControl mt={4}>
                             <Input
                                 value={customerId}
                                 ref={initialRef}
@@ -52,7 +52,7 @@ function AddCustomerModal(props) {
                         <FormControl mt={4}>
                             <Input
                                 value={customerName}
-                                placeholder="Value"
+                                placeholder="Name"
                                 onChange={(e) =>
                                     setCustomerName(e.target.value)
                                 }

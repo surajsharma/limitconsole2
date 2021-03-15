@@ -20,9 +20,11 @@ import Input from "../../Common/Input";
 
 function EditCustomerModal({ editCustomer, deleteCustomer, customer }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const initialRef = useRef();
+
     const [customerId, setCustomerId] = useState(customer.customer_id);
     const [customerName, setCustomerName] = useState(customer.customer_name);
+
+    const initialRef = useRef();
 
     return (
         <>
@@ -54,7 +56,7 @@ function EditCustomerModal({ editCustomer, deleteCustomer, customer }) {
                             <FormControl mt={4}>
                                 <Input
                                     value={customerName}
-                                    placeholder="Value"
+                                    placeholder="Name"
                                     onChange={(e) =>
                                         setCustomerName(e.target.value)
                                     }
