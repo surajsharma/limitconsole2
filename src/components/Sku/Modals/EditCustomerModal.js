@@ -18,6 +18,13 @@ import ButtonF from "../../Common/ButtonF";
 import ButtonU from "../../Common/ButtonU";
 import Input from "../../Common/Input";
 
+import DatePicker from "react-datepicker";
+
+import "react-datepicker/dist/react-datepicker.css";
+
+// CSS Modules, react-datepicker-cssmodules.css
+// import 'react-datepicker/dist/react-datepicker-cssmodules.css';
+
 function EditCustomerModal({ editCustomer, deleteCustomer, customer }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
 

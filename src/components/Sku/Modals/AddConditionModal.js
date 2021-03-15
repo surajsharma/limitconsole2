@@ -12,7 +12,6 @@ import {
     FormControl,
 } from "@chakra-ui/react";
 
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import ButtonF from "../../Common/ButtonF";
@@ -33,6 +32,7 @@ function AddConditionModal(props) {
     const [order, setOrder] = useState("");
 
     const initialRef = useRef();
+
     return (
         <>
             <ButtonF onClick={onOpen}>Add</ButtonF>

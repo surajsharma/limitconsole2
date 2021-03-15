@@ -175,8 +175,8 @@ function Customers(props) {
                 }}
             >
                 <Td>{p.promotion_promotion}</Td>
-                <Td>{p.promotion_start_date}</Td>
-                <Td>{p.promotion_end_date}</Td>
+                <Td>{p.promotion_start_date.split("T")[0]}</Td>
+                <Td>{p.promotion_end_date.split("T")[0]}</Td>
                 <Td>{p.promotion_last_updated.split("T")[0]}</Td>
                 <EditPromotionModal
                     editPromotion={EditPromotion}

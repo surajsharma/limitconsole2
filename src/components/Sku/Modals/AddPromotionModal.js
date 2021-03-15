@@ -10,11 +10,18 @@ import {
     ModalCloseButton,
     useDisclosure,
     FormControl,
+    FormLabel,
 } from "@chakra-ui/react";
 
 import ButtonF from "../../Common/ButtonF";
 import ButtonU from "../../Common/ButtonU";
 import Input from "../../Common/Input";
+
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
+// CSS Modules, react-datepicker-cssmodules.css
+// import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 
 function AddPromotionModal(props) {
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -22,8 +29,8 @@ function AddPromotionModal(props) {
     const { AddPromotion } = props;
 
     const [promotion, setPromotion] = useState("");
-    const [startDate, setStartDate] = useState("");
-    const [endDate, setEndDate] = useState("");
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date());
 
     const initialRef = useRef();
 
@@ -51,19 +58,19 @@ function AddPromotionModal(props) {
                             />
                         </FormControl>
                         &nbsp;
-                        <FormControl mt={4}>
-                            <Input
-                                value={startDate}
-                                placeholder="Start Date"
-                                onChange={(e) => setStartDate(e.target.value)}
+                        <FormControl mt={4} isRequired>
+                            <FormLabel as="legend">Start Date</FormLabel>
+                            <DatePicker
+                                selected={startDate}
+                                onChange={(date) => setStartDate(date)}
                             />
                         </FormControl>
                         &nbsp;
-                        <FormControl mt={4}>
-                            <Input
-                                value={endDate}
-                                placeholder="End Date"
-                                onChange={(e) => setEndDate(e.target.value)}
+                        <FormControl mt={4} isRequired>
+                            <FormLabel as="legend">End Date</FormLabel>
+                            <DatePicker
+                                selected={endDate}
+                                onChange={(date) => setEndDate(date)}
                             />
                         </FormControl>
                         &nbsp;

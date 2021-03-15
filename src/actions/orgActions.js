@@ -920,8 +920,8 @@ export const addPromotion = (p, customer, sku, org) => {
 
         const promotion = {
             promotion_promotion: p.promotion_promotion,
-            promotion_start_date: p.promotion_start_date,
-            promotion_end_date: p.promotion_end_date,
+            promotion_start_date: p.promotion_start_date.toISOString(),
+            promotion_end_date: p.promotion_end_date.toISOString(),
             promotion_last_updated: new Date().toISOString(),
             promotion_created: new Date().toISOString(),
             promotion_id: uuidv4(),
@@ -974,8 +974,8 @@ export const editPromotion = (p, promotion, customer, sku, org) => {
 
         const newPromotion = {
             promotion_promotion: p.promotion_promotion,
-            promotion_start_date: p.promotion_start_date,
-            promotion_end_date: p.promotion_end_date,
+            promotion_start_date: p.promotion_start_date.toISOString(),
+            promotion_end_date: p.promotion_end_date.toISOString(),
             promotion_id: promotion.promotion_id,
             promotion_created: promotion.promotion_created,
             promotion_last_updated: new Date().toISOString(),
