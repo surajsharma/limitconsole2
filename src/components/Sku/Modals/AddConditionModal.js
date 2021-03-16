@@ -73,7 +73,7 @@ function AddConditionModal(props) {
                             />
                         </FormControl>
                         &nbsp;
-                        <FormControl mt={4}>
+                        <FormControl mt={4} isRequired>
                             <Input
                                 value={value}
                                 placeholder="Value"
